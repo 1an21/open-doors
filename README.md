@@ -1,5 +1,11 @@
 **Rest API with JWT Authentication** 
 
+Generate SSH keys:
+
+`$ mkdir -p var/jwt #`
+`$ openssl genrsa -out var/jwt/private.pem -aes256 4096`
+`$ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem`
+
 Register:
 `curl -X POST http://localhost:8000/register -d _username=test -d _password=test`
 
