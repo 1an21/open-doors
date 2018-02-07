@@ -1,0 +1,21 @@
+login_check:
+    path:     /login_check
+    methods:  [POST]
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+keys:
+    resource: "@AppBundle/Controller/RkeyController.php"
+    type: rest
+
+users:
+    resource: "@AppBundle/Controller/UserController.php"
+    type: rest
+
+sensors:
+    resource: "@AppBundle/Controller/SensorController.php"
+    type: rest
+
+
+
