@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employee
  *
- * @ORM\Table(name="employee", indexes={@ORM\Index(name="role", columns={"role"})})
- * @ORM\Entity
+ * @ORM\Table(name="employee")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\EmployeeRepository")
  */
 class Employee
 {
@@ -40,23 +40,6 @@ class Employee
      * @ORM\Column(name="age", type="integer", nullable=false)
      */
     private $age;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     */
-    private $password;
-
-
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=255, nullable=false)
-     */
-    private $role;
-
 
 
     /**
@@ -131,29 +114,6 @@ class Employee
         return $this->age;
     }
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return Employee
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
 
     /**
      * Get id
@@ -163,30 +123,6 @@ class Employee
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     *
-     * @return Employee
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return \AppBundle\Entity\UserTypes
-     */
-    public function getRole()
-    {
-        return $this->role;
     }
 
 }

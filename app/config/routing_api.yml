@@ -1,9 +1,0 @@
-sensors:
-    type: rest
-    resource: "@AppBundle/Controller/SensorController.php"
-    type:     annotation
-users:
-
-    resource: "@AppBundle/Controller/UserController.php"
-    type:     annotation
-    type: rest

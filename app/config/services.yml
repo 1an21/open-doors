@@ -9,16 +9,26 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\User
-    crv.doctrine_entity_repository.sensor:
+    crv.doctrine_entity_repository.lock:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\Sensor
-    crv.doctrine_entity_repository.rkey:
+            - AppBundle\Entity\Lock
+    crv.doctrine_entity_repository.key:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\Rkey
+            - AppBundle\Entity\Key
+    crv.doctrine_entity_repository.employee:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Employee
+    crv.doctrine_entity_repository.lockkey:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Lockkey
     app.jwt_token_authenticator:
             parent: lexik_jwt_authentication.security.guard.jwt_token_authenticator
             class: AppBundle\Security\Guard\JWTAuthenticator

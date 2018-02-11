@@ -2,14 +2,14 @@
 
 namespace AppBundle\Entity\Repository;
 
-class RkeyRepository extends \Doctrine\ORM\EntityRepository
+class EmployeeRepository extends \Doctrine\ORM\EntityRepository
 {
     public function createFindAllQuery()
     {
         return $this->_em->createQuery(
             "
-            SELECT r
-            FROM AppBundle:Rkey r
+            SELECT e
+            FROM AppBundle:Employee e
             "
         );
     }
@@ -17,9 +17,9 @@ class RkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT r
-            FROM AppBundle:Rkey r
-            WHERE r.id = :id
+            SELECT e
+            FROM AppBundle:Employee e
+            WHERE e.id = :id
             "
         );
         $query->setParameter('id', $id);
@@ -30,8 +30,8 @@ class RkeyRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->_em->createQuery(
             "
             DELETE 
-            FROM AppBundle:Rkey r
-            WHERE r.id = :id
+            FROM AppBundle:Employee e
+            WHERE e.id = :id
             "
         );
         $query->setParameter('id', $id);

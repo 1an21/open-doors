@@ -2,8 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Repository\RkeyRepository;
-use AppBundle\Form\Type\RkeyType;
+use AppBundle\Entity\Lock;
+use AppBundle\Entity\Repository\LockRepository;
+use AppBundle\Form\Type\LockType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -12,15 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class RkeyController
+ * Class LockController
  * @package AppBundle\Controller
  *
- * @RouteResource("Key")
+ * @RouteResource("Lock")
  */
-class RkeyController extends FOSRestController implements ClassResourceInterface
+class LockController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * Gets an individual Rkey
+     * Gets an individual Lock
      *
      * @param int $id
      * @return mixed
@@ -30,22 +31,22 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
      */
     public function getAction($id)
     {
-        $key = $this->getRkeyRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
-        if ($key === null) {
-            return new Response(sprintf('Dont exist key with id %s', $id));
+        $lock = $this->getLockRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
+        if ($lock === null) {
+            return new Response(sprintf('Dont exist lock with id %s', $id));
         }
-        return $key;
+        return $lock;
     }
 
     /**
-     * Gets a collection of Rkeys
+     * Gets a collection of Locks
      *
      * @return array
      *
      */
     public function cgetAction()
     {
-        return $this->getRkeyRepository()->createFindAllQuery()->getResult();
+        return $this->getLockRepository()->createFindAllQuery()->getResult();
     }
 
     /**
@@ -55,7 +56,7 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
      */
     public function postAction(Request $request)
     {
-        $form = $this->createForm(RkeyType::class, null, [
+        $form = $this->createForm(LockType::class, null, [
             'csrf_protection' => false,
         ]);
 
@@ -65,14 +66,17 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
             return $form;
         }
 
-        $rkey = $form->getData();
+        /**
+         * @var $Lock Lock
+         */
+        $lock = $form->getData();
+
         $em = $this->getDoctrine()->getManager();
-        $em->persist($rkey);
+        $em->persist($lock);
         $em->flush();
 
         $routeOptions = [
-            'id' => $rkey->getId(),
-
+            'id' => $lock->getId(),
             '_format' => $request->get('_format'),
         ];
 
@@ -83,19 +87,21 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
      * @param Request $request
      * @param int     $id
      * @return View|\Symfony\Component\Form\Form
-     *
      */
     public function putAction(Request $request, $id)
     {
+        /**
+         * @var $lock lock
+         */
+        $lock = $this->getLockRepository()->find($id);
 
-        $rkey = $this->getRkeyRepository()->find($id);
-
-        if ($rkey === null) {
+        if ($lock === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(RkeyType::class, $rkey, [
-            'csrf_protection' => false,]);
+        $form = $this->createForm(LockType::class, $lock, [
+            'csrf_protection' => false,
+        ]);
 
         $form->submit($request->request->all());
 
@@ -107,11 +113,11 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
         $em->flush();
 
         $routeOptions = [
-            'id' => $rkey->getId(),
+            'id' => $lock->getId(),
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        return $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
     }
 
 
@@ -123,13 +129,16 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
      */
     public function patchAction(Request $request, $id)
     {
-        $rkey = $this->getRkeyRepository()->find($id);
+        /**
+         * @var $lock Lock
+         */
+        $lock = $this->getLockRepository()->find($id);
 
-        if ($rkey === null) {
+        if ($lock === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(RkeyType::class, $rkey, [
+        $form = $this->createForm(LockType::class, $lock, [
             'csrf_protection' => false,
         ]);
 
@@ -143,7 +152,7 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
         $em->flush();
 
         $routeOptions = [
-            'id' => $rkey->getId(),
+            'id' => $lock->getId(),
             '_format' => $request->get('_format'),
         ];
 
@@ -158,18 +167,18 @@ class RkeyController extends FOSRestController implements ClassResourceInterface
      */
     public function deleteAction($id)
     {
-        $key = $this->getRkeyRepository()->deleteQuery($id)->getResult();
-        if ($key == 0) {
+        $lock = $this->getLockRepository()->deleteQuery($id)->getResult();
+        if ($lock == 0) {
             return new Response(sprintf('This id %s doesnt exist', $id));
         }
         return new Response(sprintf('Deleted user #%s', $id));
     }
 
     /**
-     * @return RkeyRepository
+     * @return LockRepository
      */
-    private function getRkeyRepository()
+    private function getLockRepository()
     {
-        return $this->get('crv.doctrine_entity_repository.rkey');
+        return $this->get('crv.doctrine_entity_repository.lock');
     }
 }

@@ -5,17 +5,17 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Rkey
+ * Key
  *
  * @ORM\Table(name="rkey", indexes={@ORM\Index(name="id_employee", columns={"id_employee"})})
- * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\RkeyRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\KeyRepository")
  */
-class Rkey
+class Key
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_key", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -31,7 +31,12 @@ class Rkey
      */
     private $Employee;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535)
+     */
+    private $description;
 
     /**
      * Get idKey
@@ -68,4 +73,28 @@ class Rkey
     }
 
 
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Key
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }
