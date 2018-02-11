@@ -1,0 +1,31 @@
+login_check:
+    path:     /login_check
+    methods:  [POST]
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+keys:
+    resource: "@AppBundle/Controller/KeyController.php"
+    type: rest
+
+users:
+    resource: "@AppBundle/Controller/UserController.php"
+    type: rest
+
+locks:
+    resource: "@AppBundle/Controller/LockController.php"
+    type: rest
+
+employees:
+    resource: "@AppBundle/Controller/EmployeeController.php"
+    type: rest
+
+emplkey:
+    resource: "@AppBundle/Controller/EmployeeKeyController.php"
+    type: rest
+
+lockkey:
+    resource: "@AppBundle/Controller/LockkeyController.php"
+    type: rest
+
