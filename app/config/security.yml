@@ -26,7 +26,7 @@ security:
             pattern:  ^/register
             stateless: true
             anonymous: true
-<<<<<<< HEAD
+
         locks:
             pattern:  ^/lock
             stateless: true
@@ -51,10 +51,6 @@ security:
             guard:
                  authenticators:
                      - app.jwt_token_authenticator
-=======
-
->>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
-
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

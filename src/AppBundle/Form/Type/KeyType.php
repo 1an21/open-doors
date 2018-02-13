@@ -16,12 +16,9 @@ class KeyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-<<<<<<< HEAD
 
-=======
         $builder
             ->add('employee', EntityType::class, array('class' => 'AppBundle:Employee', 'choice_label' => 'IdEmpl'));
->>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
 
         $builder
             ->add('description', TextType::class)
