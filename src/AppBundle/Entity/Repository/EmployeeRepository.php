@@ -37,6 +37,7 @@ class EmployeeRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('id', $id);
         return $query;
     }
+<<<<<<< HEAD
     public function findEmployeeQuery($id)
     {
         $query = $this->_em->createQuery(
@@ -49,4 +50,6 @@ class EmployeeRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('employee', $id);
         return $query;
     }
+=======
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
 }

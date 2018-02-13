@@ -11,10 +11,17 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
             "
             SELECT l
             FROM AppBundle:Lockkey l
+<<<<<<< HEAD
             WHERE l.lock = :lock
             "
         );
         $query->setParameter('lock', $lock);
+=======
+            WHERE l.lock = :id
+            "
+        );
+        $query->setParameter('id', $lock);
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
         return $query;
     }
 
@@ -39,7 +46,11 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
             DELETE 
             FROM AppBundle:Lockkey l
             WHERE l.key = :id
+<<<<<<< HEAD
             AND l.lock = :lock
+=======
+            AND l.Lock = :lock
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
             "
         );
         $query->setParameter('lock', $lock);

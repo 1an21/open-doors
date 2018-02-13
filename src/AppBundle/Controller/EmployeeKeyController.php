@@ -4,9 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Key;
 use AppBundle\Entity\Repository\KeyRepository;
+<<<<<<< HEAD
 use AppBundle\Entity\Repository\EmployeekeyRepository;
 use AppBundle\Form\Type\KeyType;
 use AppBundle\Form\Type\EKeyType;
+=======
+use AppBundle\Form\Type\KeyType;
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -47,9 +51,15 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      * @return array
      *
      */
+<<<<<<< HEAD
     public function cgetKeysAction($employee){
 
         return $this->getKeyRepository()->findEmployeeQuery($employee)->getResult();
+=======
+    public function cgetKeysAction($id){
+
+        return $this->getKeyRepository()->findEmployeeQuery($id)->getResult();
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
     }
 
 
@@ -58,6 +68,7 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      * @return View|\Symfony\Component\Form\Form
      *
      */
+<<<<<<< HEAD
     public function postKeysAction(Request $request, $employee)
     {
         $rkey = $this->getEmployeeRepository()->find($employee);
@@ -68,10 +79,21 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         $form = $this->createForm(EKeyType::class, $rkey, [
+=======
+    public function postKeysAction($employee, Request $request)
+    {
+        $rkey = $this->getKeyRepository()->findOneBy(array('Employee'=>$employee));
+
+        $form = $this->createForm(KeyType::class, $rkey, [
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
             'csrf_protection' => false,
         ]);
 
         $form->submit($request->request->all());
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
         if (!$form->isValid()) {
             return $form;
         }
@@ -129,11 +151,16 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
 
     /**
      * @param Request $request
+<<<<<<< HEAD
      * @param int     $rkey
+=======
+     * @param int     $id
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
      * @param int     $employee
      * @return View|\Symfony\Component\Form\Form
      *
      */
+<<<<<<< HEAD
     public function patchKeysAction(Request $request, $employee, $rkey)
     {
         
@@ -141,6 +168,14 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
         $kkey = $this->getEmployeekeyRepository()->findAllQuery()->getResult();
         print_r( $kkey);
         die();
+=======
+    public function patchKeysAction(Request $request, $employee, $id)
+    {
+        /**
+         * @var $key key
+         */
+        $key = $this->getKeyRepository()->findOneBy(array('id'=>$id, 'Employee'=>$employee));
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
         if ($key === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
@@ -173,7 +208,11 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
         if ($key == 0) {
             return new Response(sprintf('This id %s doesnt exist', $id));
         }
+<<<<<<< HEAD
         return new Response(sprintf('Deleted relationship #%s', $id));
+=======
+        return new Response(sprintf('Deleted employee #%s', $id));
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
     }
 
     /**
@@ -183,6 +222,7 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
     {
         return $this->get('crv.doctrine_entity_repository.key');
     }
+<<<<<<< HEAD
     private function getEmployeeRepository()
     {
         return $this->get('crv.doctrine_entity_repository.employee');
@@ -191,4 +231,6 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
     {
         return $this->get('crv.doctrine_entity_repository.employeekey');
     }
+=======
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
 }

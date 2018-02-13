@@ -7,7 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Key
  *
+<<<<<<< HEAD
  * @ORM\Table(name="rkey")
+=======
+ * @ORM\Table(name="rkey", indexes={@ORM\Index(name="id_employee", columns={"id_employee"})})
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\KeyRepository")
  */
 class Key
@@ -21,6 +25,18 @@ class Key
      */
     private $id;
 
+<<<<<<< HEAD
+=======
+    /**
+     * @var \AppBundle\Entity\Employee
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Employee")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_employee", referencedColumnName="id_empl")
+     * })
+     */
+    private $Employee;
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
 
     /**
      * @var string
@@ -39,6 +55,33 @@ class Key
         return $this->id;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Set Employee
+     *
+     * @param \AppBundle\Entity\Employee $Employee
+     *
+     * @return Rkey
+     */
+    public function setEmployee(\AppBundle\Entity\Employee $Employee )
+    {
+        $this->Employee = $Employee;
+
+        return $this;
+    }
+
+    /**
+     * Get Employee
+     *
+     * @return \AppBundle\Entity\Employee
+     */
+    public function getEmployee()
+    {
+        return $this->Employee;
+    }
+
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
 
 
     /**

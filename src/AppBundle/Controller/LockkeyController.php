@@ -59,9 +59,14 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     public function postAvailablekeysAction(Request $request, $lock)
     {
 
+<<<<<<< HEAD
         $rkey=$this->getLockKeyRepository()->findOneBy(array('lock'=>$lock));
 
             if ($rkey === null) {
+=======
+        $rkey=$this->getLockKeyRepository()->find($lock);
+        if ($rkey === null) {
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
             return new View(null, Response::HTTP_NOT_FOUND);
         }
         $form = $this->createForm(LockkeyType::class, $rkey, [
@@ -166,11 +171,25 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      */
     public function deleteAvailablekeysAction($lock, $id)
     {
+<<<<<<< HEAD
         $key = $this->getLockKeyRepository()->deleteLockKeyQuery($lock, $id)->getResult();
         if ($key== 0) {
             return new Response(sprintf('This id %s doesnt exist', $id));
         }
         return new Response(sprintf('Deleted relationship #%s', $id));
+=======
+        $key = $this->getLockKeyRepository()->findOneBy(array('key'=>$id, 'lock'=>$lock));
+
+        if ($key === null) {
+            return new View('Dont exist', Response::HTTP_NOT_FOUND);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($key);
+        $em->flush();
+
+        return new View('Deleted', Response::HTTP_NO_CONTENT);
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
     }
 
     /**

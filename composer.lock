@@ -4,8 +4,13 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "0dc6886ad12380d9dbb5e87ee9ab0a59",
     "content-hash": "c68a3802906a2087e7c0b598e38ad89e",
+=======
+    "hash": "5d02d6008cd2fb5245099f4206402f80",
+    "content-hash": "d03608aa6b0c246259ad328aa0a748a1",
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -586,6 +591,7 @@
             "time": "2017-10-12 17:23:29"
         },
         {
+<<<<<<< HEAD
             "name": "doctrine/doctrine-migrations-bundle",
             "version": "v1.2.1",
             "source": {
@@ -647,6 +653,8 @@
             "time": "2016-12-05 18:36:37"
         },
         {
+=======
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
             "name": "doctrine/inflector",
             "version": "v1.2.0",
             "source": {
@@ -822,6 +830,7 @@
             "time": "2014-09-09 13:34:57"
         },
         {
+<<<<<<< HEAD
             "name": "doctrine/migrations",
             "version": "v1.5.0",
             "source": {
@@ -896,6 +905,8 @@
             "time": "2016-12-25 22:54:00"
         },
         {
+=======
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
             "name": "doctrine/orm",
             "version": "v2.5.14",
             "source": {
@@ -2013,6 +2024,7 @@
             "time": "2017-12-11 18:41:54"
         },
         {
+<<<<<<< HEAD
             "name": "ocramius/package-versions",
             "version": "1.2.0",
             "source": {
@@ -2127,6 +2139,8 @@
             "time": "2016-11-04 15:53:15"
         },
         {
+=======
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
             "name": "paragonie/random_compat",
             "version": "v2.0.11",
             "source": {
@@ -3393,6 +3407,7 @@
                 "negotiation"
             ],
             "time": "2015-10-01 07:42:40"
+<<<<<<< HEAD
         },
         {
             "name": "zendframework/zend-code",
@@ -3500,6 +3515,8 @@
                 "zf2"
             ],
             "time": "2017-07-11 19:17:22"
+=======
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
         }
     ],
     "packages-dev": [

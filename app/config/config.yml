@@ -114,6 +114,7 @@ lexik_jwt_authentication:
     private_key_path: '%jwt_private_key_path%'
     public_key_path:  '%jwt_public_key_path%'
     pass_phrase:      '%jwt_key_pass_phrase%'
+<<<<<<< HEAD
     token_ttl:        '%jwt_token_ttl%'
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"
@@ -122,3 +123,6 @@ doctrine_migrations:
     name: Application Migrations
     organize_migrations: false # Version >= 1.2, possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
     
+=======
+    token_ttl:        '%jwt_token_ttl%'
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d

@@ -159,7 +159,11 @@ class KeyController extends FOSRestController implements ClassResourceInterface
         if ($key == 0) {
             return new Response(sprintf('This id %s doesnt exist', $id));
         }
+<<<<<<< HEAD
         return new Response(sprintf('Deleted key #%s', $id));
+=======
+        return new Response(sprintf('Deleted user #%s', $id));
+>>>>>>> 3bc210f76dea6c544859efa28b8f049cd025314d
     }
 
     /**
