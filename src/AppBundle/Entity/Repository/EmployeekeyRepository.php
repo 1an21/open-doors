@@ -2,42 +2,30 @@
 
 namespace AppBundle\Entity\Repository;
 
-class KeyRepository extends \Doctrine\ORM\EntityRepository
+class EmployeekeyRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllKeyQuery()
+
+    public function findAllQuery()
     {
         return $this->_em->createQuery(
             "
             SELECT k
-            FROM AppBundle:Key k
+            FROM AppBundle:Employeekey k
             "
         );
     }
-    public function findKeyQuery($id)
+    public function findEmployeeQuery($employee)
     {
         $query = $this->_em->createQuery(
             "
             SELECT k
-            FROM AppBundle:Key k
-            WHERE k.id = :id
+            FROM AppBundle:Employeekey k
+            WHERE k.employee = :employee
             "
         );
-        $query->setParameter('id', $id);
+        $query->setParameter('employee', $employee);
         return $query;
     }
-    public function deleteKeyQuery($id)
-    {
-        $query = $this->_em->createQuery(
-            "
-            DELETE 
-            FROM AppBundle:Key k
-            WHERE k.id = :id
-            "
-        );
-        $query->setParameter('id', $id);
-        return $query;
-    }
-
     public function deleteEmployeeKeyQuery($employee, $id)
     {
         $query = $this->_em->createQuery(
@@ -53,18 +41,6 @@ class KeyRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-    public function findEmployeeQuery($employee)
-    {
-        $query = $this->_em->createQuery(
-            "
-            SELECT k
-            FROM AppBundle:Employeekey k
-            WHERE k.employee = :employee
-            "
-        );
-        $query->setParameter('employee', $employee);
-        return $query;
-    }
 
     public function findEmployeeKeyQuery($employee, $rkey)
     {
@@ -80,6 +56,4 @@ class KeyRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('rkey', $rkey);
         return $query;
     }
-
-
 }

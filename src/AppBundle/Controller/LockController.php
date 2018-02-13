@@ -171,7 +171,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
         if ($lock == 0) {
             return new Response(sprintf('This id %s doesnt exist', $id));
         }
-        return new Response(sprintf('Deleted user #%s', $id));
+        return new Response(sprintf('Deleted lock #%s', $id));
     }
 
     /**

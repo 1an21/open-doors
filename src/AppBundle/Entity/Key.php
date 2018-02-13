@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Key
  *
- * @ORM\Table(name="rkey", indexes={@ORM\Index(name="id_employee", columns={"id_employee"})})
+ * @ORM\Table(name="rkey")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\KeyRepository")
  */
 class Key
@@ -21,15 +21,6 @@ class Key
      */
     private $id;
 
-    /**
-     * @var \AppBundle\Entity\Employee
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_employee", referencedColumnName="id_empl")
-     * })
-     */
-    private $Employee;
 
     /**
      * @var string
@@ -46,30 +37,6 @@ class Key
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set Employee
-     *
-     * @param \AppBundle\Entity\Employee $Employee
-     *
-     * @return Rkey
-     */
-    public function setEmployee(\AppBundle\Entity\Employee $Employee )
-    {
-        $this->Employee = $Employee;
-
-        return $this;
-    }
-
-    /**
-     * Get Employee
-     *
-     * @return \AppBundle\Entity\Employee
-     */
-    public function getEmployee()
-    {
-        return $this->Employee;
     }
 
 

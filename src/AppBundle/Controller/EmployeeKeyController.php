@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Key;
 use AppBundle\Entity\Repository\KeyRepository;
+use AppBundle\Entity\Repository\EmployeekeyRepository;
 use AppBundle\Form\Type\KeyType;
+use AppBundle\Form\Type\EKeyType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -45,9 +47,9 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      * @return array
      *
      */
-    public function cgetKeysAction($id){
+    public function cgetKeysAction($employee){
 
-        return $this->getKeyRepository()->findEmployeeQuery($id)->getResult();
+        return $this->getKeyRepository()->findEmployeeQuery($employee)->getResult();
     }
 
 
@@ -56,16 +58,20 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      * @return View|\Symfony\Component\Form\Form
      *
      */
-    public function postKeysAction($employee, Request $request)
+    public function postKeysAction(Request $request, $employee)
     {
-        $rkey = $this->getKeyRepository()->findOneBy(array('Employee'=>$employee));
-
-        $form = $this->createForm(KeyType::class, $rkey, [
+        $rkey = $this->getEmployeeRepository()->find($employee);
+        print_r($rkey);
+        die();
+        
+        if ($rkey === null) {
+            return new View(null, Response::HTTP_NOT_FOUND);
+        }
+        $form = $this->createForm(EKeyType::class, $rkey, [
             'csrf_protection' => false,
         ]);
 
         $form->submit($request->request->all());
-
         if (!$form->isValid()) {
             return $form;
         }
@@ -123,17 +129,18 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
 
     /**
      * @param Request $request
-     * @param int     $id
+     * @param int     $rkey
      * @param int     $employee
      * @return View|\Symfony\Component\Form\Form
      *
      */
-    public function patchKeysAction(Request $request, $employee, $id)
+    public function patchKeysAction(Request $request, $employee, $rkey)
     {
-        /**
-         * @var $key key
-         */
-        $key = $this->getKeyRepository()->findOneBy(array('id'=>$id, 'Employee'=>$employee));
+        
+        //$key = $this->getEmployeeRepository()->find($employee);
+        $kkey = $this->getEmployeekeyRepository()->findAllQuery()->getResult();
+        print_r( $kkey);
+        die();
         if ($key === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
@@ -166,7 +173,7 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
         if ($key == 0) {
             return new Response(sprintf('This id %s doesnt exist', $id));
         }
-        return new Response(sprintf('Deleted employee #%s', $id));
+        return new Response(sprintf('Deleted relationship #%s', $id));
     }
 
     /**
@@ -175,5 +182,13 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
     private function getKeyRepository()
     {
         return $this->get('crv.doctrine_entity_repository.key');
+    }
+    private function getEmployeeRepository()
+    {
+        return $this->get('crv.doctrine_entity_repository.employee');
+    }
+    private function getEmployeekeyRepository()
+    {
+        return $this->get('crv.doctrine_entity_repository.employeekey');
     }
 }

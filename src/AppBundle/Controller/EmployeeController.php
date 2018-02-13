@@ -76,8 +76,10 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
             '_format' => $request->get('_format'),
         ];
+        $id=$employee->getId();
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        return $this->getEmployeeRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
     }
 
     /**
@@ -111,8 +113,9 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
             'id' => $employee->getId(),
             '_format' => $request->get('_format'),
         ];
-
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $id=$employee->getId();
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        return $this->getEmployeeRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
     }
 
 
@@ -144,7 +147,9 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
             'id' => $employee->getId(),
             '_format' => $request->get('_format'),
         ];
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $id=$employee->getId();
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        return $this->getEmployeeRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
     }
 
 

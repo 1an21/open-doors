@@ -11,10 +11,10 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
             "
             SELECT l
             FROM AppBundle:Lockkey l
-            WHERE l.lock = :id
+            WHERE l.lock = :lock
             "
         );
-        $query->setParameter('id', $lock);
+        $query->setParameter('lock', $lock);
         return $query;
     }
 
@@ -39,7 +39,7 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
             DELETE 
             FROM AppBundle:Lockkey l
             WHERE l.key = :id
-            AND l.Lock = :lock
+            AND l.lock = :lock
             "
         );
         $query->setParameter('lock', $lock);

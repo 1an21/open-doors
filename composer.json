@@ -35,7 +35,8 @@
         "jms/serializer-bundle": "^1.1",
         "willdurand/faker-bundle": "^1.3",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "lexik/jwt-authentication-bundle": "^2.4"
+        "lexik/jwt-authentication-bundle": "^2.4",
+        "doctrine/doctrine-migrations-bundle": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

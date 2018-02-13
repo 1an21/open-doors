@@ -37,4 +37,16 @@ class EmployeeRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('id', $id);
         return $query;
     }
+    public function findEmployeeQuery($id)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT k
+            FROM AppBundle:Employeekey k
+            WHERE k.employee = :id
+            "
+        );
+        $query->setParameter('employee', $id);
+        return $query;
+    }
 }

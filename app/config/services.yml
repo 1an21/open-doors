@@ -29,6 +29,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Lockkey
+    crv.doctrine_entity_repository.employeekey:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Employeekey
     app.jwt_token_authenticator:
             parent: lexik_jwt_authentication.security.guard.jwt_token_authenticator
             class: AppBundle\Security\Guard\JWTAuthenticator
