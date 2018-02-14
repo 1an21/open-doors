@@ -26,14 +26,13 @@ security:
             pattern:  ^/register
             stateless: true
             anonymous: true
-
         locks:
             pattern:  ^/lock
             stateless: true
             anonymous: false
             provider: entity_provider
             guard:
-                 authenticators:
+                authenticators:
                      - app.jwt_token_authenticator
         keys:
             pattern:  ^/key
@@ -41,16 +40,18 @@ security:
             anonymous: false
             provider: entity_provider
             guard:
-                 authenticators:
-                     - app.jwt_token_authenticator
+                  authenticators:
+                      - app.jwt_token_authenticator
         employees:
             pattern:  ^/employee
             stateless: true
             anonymous: false
             provider: entity_provider
             guard:
-                 authenticators:
-                     - app.jwt_token_authenticator
+                  authenticators:
+                      - app.jwt_token_authenticator
+
+
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

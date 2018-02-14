@@ -83,8 +83,6 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
         return $this->getEmployeeRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
 
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
-
     }
 
     /**

@@ -60,7 +60,7 @@ class Lockkey
      *
      * @return Lockkey
      */
-    public function setLock(\AppBundle\Entity\Lock $lock = null)
+    public function setLock(\AppBundle\Entity\Lock $lock)
     {
         $this->lock = $lock;
 

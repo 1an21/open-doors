@@ -5,15 +5,20 @@ namespace AppBundle\Entity\Repository;
 class EmployeekeyRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function findAllQuery()
+
+    public function findIdQuery($id)
     {
-        return $this->_em->createQuery(
+        $query = $this->_em->createQuery(
             "
             SELECT k
             FROM AppBundle:Employeekey k
+            WHERE k.id = :id
             "
         );
+        $query->setParameter('id', $id);
+        return $query;
     }
+
     public function findEmployeeQuery($employee)
     {
         $query = $this->_em->createQuery(
@@ -26,6 +31,7 @@ class EmployeekeyRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('employee', $employee);
         return $query;
     }
+
     public function deleteEmployeeKeyQuery($employee, $id)
     {
         $query = $this->_em->createQuery(
@@ -55,5 +61,16 @@ class EmployeekeyRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('employee', $employee);
         $query->setParameter('rkey', $rkey);
         return $query;
+    }
+
+
+    public function findQuery()
+    {
+        return $this->_em->createQuery(
+            "
+            SELECT k
+            FROM AppBundle:Employeekey k
+            "
+        );
     }
 }

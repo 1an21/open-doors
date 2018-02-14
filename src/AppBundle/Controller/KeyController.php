@@ -77,7 +77,9 @@ class KeyController extends FOSRestController implements ClassResourceInterface
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $id=$key->getId();
+        return $this->getKeyRepository()->findKeyQuery($id)->getOneOrNullResult();
     }
 
     /**
@@ -112,7 +114,9 @@ class KeyController extends FOSRestController implements ClassResourceInterface
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $id=$key->getId();
+        return $this->getKeyRepository()->findKeyQuery($id)->getOneOrNullResult();
     }
 
 
@@ -144,7 +148,9 @@ class KeyController extends FOSRestController implements ClassResourceInterface
             'id' => $key->getId(),
             '_format' => $request->get('_format'),
         ];
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $id=$key->getId();
+        return $this->getKeyRepository()->findKeyQuery($id)->getOneOrNullResult();
     }
 
 
@@ -157,13 +163,9 @@ class KeyController extends FOSRestController implements ClassResourceInterface
     {
         $key = $this->getKeyRepository()->deleteKeyQuery($id)->getResult();
         if ($key == 0) {
-            return new Response(sprintf('This id %s doesnt exist', $id));
+            return new View("This id $id doesnt exist");
         }
-
-        return new Response(sprintf('Deleted key #%s', $id));
-
-        return new Response(sprintf('Deleted user #%s', $id));
-
+        return new View("Deleted user $id");
     }
 
     /**

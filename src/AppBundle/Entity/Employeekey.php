@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employeekey
  *
- * @ORM\Table(name="employeekey", uniqueConstraints={@ORM\UniqueConstraint(name="rkey_2", columns={"rkey"})}, indexes={@ORM\Index(name="rkey", columns={"rkey"}), @ORM\Index(name="employee", columns={"employee"})})
+ * @ORM\Table(name="employeekey", uniqueConstraints={@ORM\UniqueConstraint(name="rkey", columns={"rkey"})}, indexes={@ORM\Index(name="rkey", columns={"rkey"}), @ORM\Index(name="employee", columns={"employee"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\EmployeekeyRepository")
  */
 class Employeekey
@@ -48,6 +48,8 @@ class Employeekey
      */
     private $description;
 
+
+
     /**
      * Get id
      *
@@ -65,7 +67,7 @@ class Employeekey
      *
      * @return Employeekey
      */
-    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
+    public function setEmployee(\AppBundle\Entity\Employee $employee)
     {
         $this->employee = $employee;
 
@@ -99,7 +101,7 @@ class Employeekey
     /**
      * Get rkey
      *
-     * @return \AppBundle\Entity\Rkey
+     * @return \AppBundle\Entity\Key
      */
     public function getRkey()
     {
@@ -111,7 +113,7 @@ class Employeekey
      *
      * @param string $description
      *
-     * @return Lock
+     * @return Employeekey
      */
     public function setDescription($description)
     {

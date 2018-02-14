@@ -2,13 +2,12 @@
 
 namespace AppBundle\Form\Type;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-class EKeyType extends AbstractType
+class EmployeeKeyType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,12 +15,10 @@ class EKeyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $builder
-            ->add('key', EntityType::class, array('class' => 'AppBundle:Key', 'choice_label' => 'key'));
-
-
+            ->add('rkey', EntityType::class, array('class' => 'AppBundle:Key', 'choice_label' => 'rkey'));
+        $builder
+            ->add('description', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

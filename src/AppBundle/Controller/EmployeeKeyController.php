@@ -2,11 +2,12 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Key;
+use AppBundle\Entity\Employee;
+use AppBundle\Entity\Employeekey;
 use AppBundle\Entity\Repository\KeyRepository;
 use AppBundle\Entity\Repository\EmployeekeyRepository;
 use AppBundle\Form\Type\KeyType;
-use AppBundle\Form\Type\EKeyType;
+use AppBundle\Form\Type\EmployeeKeyType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -26,17 +27,17 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      * Gets an individual key
      *
      * @param int $employee
-     * @param int $id
+     * @param int $rkey
      * @return mixed
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
      */
-    public function getKeysAction($employee, $id)
+    public function getKeysAction($employee, $rkey)
     {
-        $key = $this->getKeyRepository()->findEmployeeKeyQuery($employee,$id)->getOneOrNullResult();
+        $key = $this->getEmployeekeyRepository()->findEmployeeKeyQuery($employee,$rkey)->getOneOrNullResult();
         if ($key === null) {
-            return new Response(sprintf('Dont exist key with id %s for employee %s', $id , $employee));
+            return new Response(sprintf('Dont exist key with id %s for employee %s', $rkey , $employee));
         }
         return $key;
     }
@@ -49,7 +50,7 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      */
     public function cgetKeysAction($employee){
 
-        return $this->getKeyRepository()->findEmployeeQuery($employee)->getResult();
+        return $this->getEmployeekeyRepository()->findEmployeeQuery($employee)->getResult();
     }
 
 
@@ -60,14 +61,15 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      */
     public function postKeysAction(Request $request, $employee)
     {
-        $rkey = $this->getEmployeeRepository()->find($employee);
-        print_r($rkey);
-        die();
-        
-        if ($rkey === null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
-        }
-        $form = $this->createForm(EKeyType::class, $rkey, [
+        $this->getEmployeeRepository()->createFindOneByIdQuery($employee)->getOneOrNullResult();
+        $em = $this->get('doctrine')->getManager();
+        $emp=$em->getRepository('AppBundle:Employee')->findOneById($employee);
+        $em->flush();
+
+        $employeekey=new Employeekey();
+        $employeekey->setEmployee($emp);
+
+        $form = $this->createForm(EmployeeKeyType::class, $employeekey, [
             'csrf_protection' => false,
         ]);
 
@@ -87,7 +89,9 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $id=$employeekey->getId();
+        return $this->getEmployeekeyRepository()->findIdQuery($id)->getOneOrNullResult();
     }
 
     /**
@@ -97,16 +101,16 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      * @return View|\Symfony\Component\Form\Form
      *
      */
-    public function putKeysAction(Request $request, $employee, $id)
+    public function putKeysAction(Request $request, $employee, $rkey)
     {
 
-        $key = $this->getKeyRepository()->findOneBy(array('id'=>$id, 'Employee'=>$employee));
+        $key = $this->getEmployeeKeyRepository()->findOneBy(array('rkey'=>$rkey, 'employee'=>$employee));
 
         if ($key === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(KeyType::class, $key, [
+        $form = $this->createForm(EmployeeKeyType::class, $key, [
             'csrf_protection' => false,]);
 
         $form->submit($request->request->all());
@@ -123,7 +127,9 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $id=$key->getId();
+        return $this->getEmployeekeyRepository()->findIdQuery($id)->getOneOrNullResult();
     }
 
 
@@ -136,15 +142,14 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      */
     public function patchKeysAction(Request $request, $employee, $rkey)
     {
-        
-        //$key = $this->getEmployeeRepository()->find($employee);
-        $kkey = $this->getEmployeekeyRepository()->findAllQuery()->getResult();
-        print_r( $kkey);
-        die();
+
+
+        $key = $this->getEmployeeKeyRepository()->findOneBy(array('rkey'=>$rkey, 'employee'=>$employee));
+
         if ($key === null) {
             return new View(null, Response::HTTP_NOT_FOUND);
         }
-        $form = $this->createForm(KeyType::class, $key, [
+        $form = $this->createForm(EmployeeKeyType::class, $key, [
             'csrf_protection' => false,
         ]);
         $form->submit($request->request->all(), false);
@@ -157,7 +162,9 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
             'id' => $key->getId(),
             '_format' => $request->get('_format'),
         ];
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $id=$key->getId();
+        return $this->getEmployeekeyRepository()->findIdQuery($id)->getOneOrNullResult();
     }
 
 
@@ -171,9 +178,9 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
     {
         $key = $this->getKeyRepository()->deleteEmployeeKeyQuery($employee, $id)->getResult();
         if ($key == 0) {
-            return new Response(sprintf('This id %s doesnt exist', $id));
+            return new View("This id $id doesnt exist");
         }
-        return new Response(sprintf('Deleted relationship #%s', $id));
+        return new View("Deleted relationship $id");
     }
 
     /**

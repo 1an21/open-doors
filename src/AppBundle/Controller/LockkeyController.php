@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Lockkey;
+use AppBundle\Entity\Repository\LockRepository;
 use AppBundle\Entity\Repository\LockkeyRepository;
 use AppBundle\Form\Type\LockkeyType;
 use FOS\RestBundle\View\View;
@@ -34,7 +35,7 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     {
         $key = $this->getLockKeyRepository()->findlockKeyQuery($lock,$id)->getOneOrNullResult();
         if ($key === null) {
-            return new Response(sprintf('Dont exist key with id %s for lock %s', $id , $lock));
+            return new View("Dont exist key with id $id for lock $lock");
         }
         return $key;
     }
@@ -58,18 +59,18 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      */
     public function postAvailablekeysAction(Request $request, $lock)
     {
-
-
-        $rkey=$this->getLockKeyRepository()->findOneBy(array('lock'=>$lock));
-
-            if ($rkey === null) {
-
-        $rkey=$this->getLockKeyRepository()->find($lock);
-        if ($rkey === null) {
-
-            return new View(null, Response::HTTP_NOT_FOUND);
+        $lockk=$this->getLockRepository()->createFindOneByIdQuery($lock)->getOneOrNullResult();
+        if ($lockk === null) {
+        return new View('Doesnt exist', Response::HTTP_NOT_FOUND);
         }
-        $form = $this->createForm(LockkeyType::class, $rkey, [
+        $em = $this->get('doctrine')->getManager();
+        $locks=$em->getRepository('AppBundle:Lock')->findOneById($lock);
+        $em->flush();
+
+        $lockkey=new Lockkey();
+        $lockkey->setLock($locks);
+
+        $form = $this->createForm(LockkeyType::class, $lockkey, [
             'csrf_protection' => false,
         ]);
 
@@ -90,7 +91,9 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $id=$lockkey->getId();
+        return $this->getLockkeyRepository()->findIdQuery($id)->getOneOrNullResult();
     }
 
     /**
@@ -106,7 +109,7 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
         $key = $this->getLockKeyRepository()->findOneBy(array('key'=>$id, 'lock'=>$lock));
 
         if ($key === null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
+            return new View("Doesnt exist", Response::HTTP_NOT_FOUND);
         }
 
         $form = $this->createForm(LockkeyType::class, $key, [
@@ -126,7 +129,9 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $id=$key->getId();
+        return $this->getLockkeyRepository()->findIdQuery($id)->getOneOrNullResult();
     }
 
 
@@ -144,7 +149,7 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
          */
         $key = $this->getLockKeyRepository()->findOneBy(array('key'=>$id, 'lock'=>$lock));
         if ($key === null) {
-            return new View(null, Response::HTTP_NOT_FOUND);
+            return new View("Doesnt exist", Response::HTTP_NOT_FOUND);
         }
         $form = $this->createForm(LockkeyType::class, $key, [
             'csrf_protection' => false,
@@ -159,7 +164,9 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
             'id' => $key->getId(),
             '_format' => $request->get('_format'),
         ];
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_OK);
+        $id=$key->getId();
+        return $this->getLockkeyRepository()->findIdQuery($id)->getOneOrNullResult();
     }
 
 
@@ -171,25 +178,10 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      */
     public function deleteAvailablekeysAction($lock, $id)
     {
-
         $key = $this->getLockKeyRepository()->deleteLockKeyQuery($lock, $id)->getResult();
         if ($key== 0) {
-            return new Response(sprintf('This id %s doesnt exist', $id));
-        }
-        return new Response(sprintf('Deleted relationship #%s', $id));
-
-        $key = $this->getLockKeyRepository()->findOneBy(array('key'=>$id, 'lock'=>$lock));
-
-        if ($key === null) {
-            return new View('Dont exist', Response::HTTP_NOT_FOUND);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($key);
-        $em->flush();
-
-        return new View('Deleted', Response::HTTP_NO_CONTENT);
-
+            return new View("This id $id doesnt exist"); }
+        return new View("Deleted user $id");
     }
 
     /**
@@ -198,5 +190,9 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     private function getLockKeyRepository()
     {
         return $this->get('crv.doctrine_entity_repository.lockkey');
+    }
+    private function getLockRepository()
+    {
+        return $this->get('crv.doctrine_entity_repository.lock');
     }
 }
