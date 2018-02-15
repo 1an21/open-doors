@@ -11,7 +11,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * Class KeyController
  * @package AppBundle\Controller
@@ -52,7 +52,7 @@ class KeyController extends FOSRestController implements ClassResourceInterface
     /**
      * @param Request $request
      * @return View|\Symfony\Component\Form\Form
-     *
+     * @Security("has_role('ROLE_KEY_ADDER')")
      */
     public function postAction(Request $request)
     {
