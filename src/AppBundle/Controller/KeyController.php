@@ -56,6 +56,7 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      */
     public function postAction(Request $request)
     {
+
         $form = $this->createForm(KeyType::class, null, [
             'csrf_protection' => false,
         ]);

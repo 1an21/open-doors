@@ -80,7 +80,9 @@ class LockController extends FOSRestController implements ClassResourceInterface
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+        $id=$lock->getId();
+        return $this->getLockRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
     }
 
     /**
@@ -117,7 +119,9 @@ class LockController extends FOSRestController implements ClassResourceInterface
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $id=$lock->getId();
+        return $this->getLockRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
     }
 
 
@@ -156,7 +160,9 @@ class LockController extends FOSRestController implements ClassResourceInterface
             '_format' => $request->get('_format'),
         ];
 
-        return $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $this->routeRedirectView('', $routeOptions, Response::HTTP_NO_CONTENT);
+        $id=$lock->getId();
+        return $this->getLockRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
     }
 
 
@@ -169,9 +175,9 @@ class LockController extends FOSRestController implements ClassResourceInterface
     {
         $lock = $this->getLockRepository()->deleteQuery($id)->getResult();
         if ($lock == 0) {
-            return new Response(sprintf('This id %s doesnt exist', $id));
+            return new View("This id  $id doesnt exist");
         }
-        return new Response(sprintf('Deleted user #%s', $id));
+        return new View("Deleted lock $id");
     }
 
     /**

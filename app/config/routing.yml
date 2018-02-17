@@ -8,6 +8,7 @@ app:
 keys:
     resource: "@AppBundle/Controller/KeyController.php"
     type: rest
+    #defaults: { _controller: AppBundle:Key:cget }
 
 users:
     resource: "@AppBundle/Controller/UserController.php"

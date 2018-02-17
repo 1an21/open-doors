@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\UserRepository")
@@ -45,6 +45,7 @@ class User implements UserInterface
     public function __construct($username)
     {
         $this->username = $username;
+
     }
 
     public function getUsername()
@@ -69,7 +70,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->role);
     }
     public function setRoles($role)
     {

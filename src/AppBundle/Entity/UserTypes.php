@@ -3,13 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\Role\RoleInterface;
 /**
  *
  * @ORM\Table(name="user_types")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\UserTypesRepository")
  */
-class UserTypes
+class UserTypes implements RoleInterface
 {
     /**
      * @var integer
@@ -61,5 +61,14 @@ class UserTypes
     public function __toString()
     {
      return $this->type;
+    }
+    /**
+     * Реализация метода, требуемого интерфейсом RoleInterface.
+     *
+     * @return string The role.
+     */
+    public function getRole()
+    {
+        return $this->getType();
     }
 }

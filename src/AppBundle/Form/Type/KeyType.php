@@ -16,6 +16,8 @@ class KeyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder
+            ->add('tag', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

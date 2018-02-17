@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\User;
-
+use FOS\RestBundle\View\View;
 class AuthController extends Controller
 {
     /**
@@ -32,8 +32,8 @@ class AuthController extends Controller
 
         $em->persist($user);
         $em->flush($user);
-
-    return new Response(sprintf('User %s successfully created', $user->getUsername()));
+        $nameuser=$user->getUsername();
+        return new View("User $nameuser successfully created");
     }
 
 }

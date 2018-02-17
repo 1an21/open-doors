@@ -40,8 +40,8 @@ security:
             anonymous: false
             provider: entity_provider
             guard:
-                  authenticators:
-                      - app.jwt_token_authenticator
+                authenticators:
+                     - app.jwt_token_authenticator
         employees:
             pattern:  ^/employee
             stateless: true

@@ -20,7 +20,10 @@ class Key
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
+    /**
+     * @ORM\Column(type="string", length=25, unique=true)
+     */
+    private $tag;
     /**
      * Get idKey
      *
@@ -31,4 +34,28 @@ class Key
         return $this->id;
     }
 
+
+    /**
+     * Set value
+     *
+     * @param string $tag
+     *
+     * @return Key
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
 }
