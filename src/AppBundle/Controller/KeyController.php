@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 /**
  * Class KeyController
  * @package AppBundle\Controller
@@ -28,6 +29,13 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Rkey",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function getAction($id)
     {
@@ -43,6 +51,13 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      *
      * @return array
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Rkey",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function cgetAction()
     {
@@ -50,9 +65,17 @@ class KeyController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
+     * Add a new key (require a role KEY_ADDER)
      * @param Request $request
      * @return View|\Symfony\Component\Form\Form
      * @Security("has_role('ROLE_KEY_ADDER')")
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Rkey",
+     *     statusCodes={
+     *         201 = "Returned when a new key has been successful created",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function postAction(Request $request)
     {
@@ -84,10 +107,20 @@ class KeyController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
+     * Totally update a key
      * @param Request $request
      * @param int     $id
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\RkeyType",
+     *     output="AppBundle\Entity\Rkey",
+     *     statusCodes={
+     *         204 = "Returned when an existing key has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function putAction(Request $request, $id)
     {
@@ -122,10 +155,20 @@ class KeyController extends FOSRestController implements ClassResourceInterface
 
 
     /**
+     * Update a key
      * @param Request $request
      * @param int     $id
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\RkeyType",
+     *     output="AppBundle\Entity\Rkey",
+     *     statusCodes={
+     *         204 = "Returned when an existing key has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function patchAction(Request $request, $id)
     {
@@ -156,9 +199,16 @@ class KeyController extends FOSRestController implements ClassResourceInterface
 
 
     /**
+     * Delete a key
      * @param int $id
      * @return View
      *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204 = "Returned when an existing key has been successful deleted",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function deleteAction($id)
     {

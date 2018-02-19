@@ -11,7 +11,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 /**
  * Class EmployeeController
  * @package AppBundle\Controller
@@ -28,6 +28,13 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Employee",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function getAction($id)
     {
@@ -43,6 +50,13 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
      *
      * @return array
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Employee",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function cgetAction()
     {
@@ -50,9 +64,17 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
     }
 
     /**
+     * Add a new employee
      * @param Request $request
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Employee",
+     *     statusCodes={
+     *         201 = "Returned when a new employee has been successful created",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function postAction(Request $request)
     {
@@ -86,10 +108,20 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
     }
 
     /**
+     * Totally update employee
      * @param Request $request
      * @param int     $id
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\EmployeeType",
+     *     output="AppBundle\Entity\Employee",
+     *     statusCodes={
+     *         204 = "Returned when an existing Employee has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function putAction(Request $request, $id)
     {
@@ -128,10 +160,20 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
 
     /**
+     * Update employee
      * @param Request $request
      * @param int     $id
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\EmployeeType",
+     *     output="AppBundle\Entity\Employee",
+     *     statusCodes={
+     *         204 = "Returned when an existing employee has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function patchAction(Request $request, $id)
     {
@@ -166,9 +208,16 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
 
     /**
+     * Delete employee
      * @param int $id
      * @return View
      *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204 = "Returned when an existing Employee has been successful deleted",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function deleteAction($id)
     {

@@ -14,7 +14,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 /**
  * Class KeyController
  * @package AppBundle\Controller
@@ -32,6 +32,13 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\EmployeeKey",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function getKeysAction($employee, $rkey)
     {
@@ -47,6 +54,13 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      *
      * @return array
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\EmployeeKey",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function cgetKeysAction($employee){
 
@@ -55,9 +69,17 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
 
 
     /**
+     * Add a new employee key relationship
      * @param Request $request
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\EmployeeKey",
+     *     statusCodes={
+     *         201 = "Returned when a new employee key relationship has been successful created",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function postKeysAction(Request $request, $employee)
     {
@@ -95,11 +117,21 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
     }
 
     /**
+     * Totally update employee key relationship
      * @param Request $request
      * @param int     $id
      * @param int     $employee
      * @return View|\Symfony\Component\Form\Form
-     *
+     * 
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\EmployeeKeyType",
+     *     output="AppBundle\Entity\EmployeeKey",
+     *     statusCodes={
+     *         204 = "Returned when an existing employee key relationship has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function putKeysAction(Request $request, $employee, $rkey)
     {
@@ -134,11 +166,21 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
 
 
     /**
+     * Update employee key relationship
      * @param Request $request
      * @param int     $rkey
      * @param int     $employee
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\EmployeeKeyType",
+     *     output="AppBundle\Entity\Employeeey",
+     *     statusCodes={
+     *         204 = "Returned when an existing employee key relationship has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function patchKeysAction(Request $request, $employee, $rkey)
     {
@@ -169,18 +211,25 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
 
 
     /**
+     * Delete a employee key relationship
      * @param int $id
      * @param int $employee
      * @return View
      *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204 = "Returned when an existing employee key relationship has been successful deleted",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
-    public function deleteKeysAction($employee, $id)
+    public function deleteKeysAction($employee, $rkey)
     {
-        $key = $this->getKeyRepository()->deleteEmployeeKeyQuery($employee, $id)->getResult();
+        $key = $this->getKeyRepository()->deleteEmployeeKeyQuery($employee, $rkey)->getResult();
         if ($key == 0) {
-            return new View("This id $id doesnt exist");
+            return new View("This id $rkey doesnt exist");
         }
-        return new View("Deleted relationship $id");
+        return new View("Deleted relationship $rkey");
     }
 
     /**

@@ -11,7 +11,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 /**
  * Class LockController
  * @package AppBundle\Controller
@@ -28,6 +28,13 @@ class LockController extends FOSRestController implements ClassResourceInterface
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lock",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function getAction($id)
     {
@@ -43,6 +50,13 @@ class LockController extends FOSRestController implements ClassResourceInterface
      *
      * @return array
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lock",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function cgetAction()
     {
@@ -50,9 +64,17 @@ class LockController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
+     * Add a new lock
      * @param Request $request
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lock",
+     *     statusCodes={
+     *         201 = "Returned when a new lock has been successful created",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function postAction(Request $request)
     {
@@ -86,9 +108,19 @@ class LockController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
+     * Totally update lock
      * @param Request $request
      * @param int     $id
      * @return View|\Symfony\Component\Form\Form
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\LockType",
+     *     output="AppBundle\Entity\Lock",
+     *     statusCodes={
+     *         204 = "Returned when an existing lock has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function putAction(Request $request, $id)
     {
@@ -126,10 +158,20 @@ class LockController extends FOSRestController implements ClassResourceInterface
 
 
     /**
+     * Update lock
      * @param Request $request
      * @param int     $id
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\LockType",
+     *     output="AppBundle\Entity\Lock",
+     *     statusCodes={
+     *         204 = "Returned when an existing lock has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function patchAction(Request $request, $id)
     {
@@ -167,9 +209,16 @@ class LockController extends FOSRestController implements ClassResourceInterface
 
 
     /**
+     * Delete a lock
      * @param int $id
      * @return View
      *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204 = "Returned when an existing lock has been successful deleted",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function deleteAction($id)
     {

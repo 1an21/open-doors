@@ -12,7 +12,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 /**
  * Class KeyController
  * @package AppBundle\Controller
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LockkeyController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * Gets an individual key
+     * Gets an individual key for individual lock
      *
      * @param int $lock
      * @param int $id
@@ -30,6 +30,13 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lockkey",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function getAvailablekeysAction($lock, $id)
     {
@@ -45,6 +52,13 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      *
      * @return array
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lockkey",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function cgetAvailablekeysAction($lock){
 
@@ -53,9 +67,17 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
 
 
     /**
+     * Add a new lock key relationship
      * @param Request $request
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lockkey",
+     *     statusCodes={
+     *         201 = "Returned when a new lock key relationship has been successful created",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function postAvailablekeysAction(Request $request, $lock)
     {
@@ -97,11 +119,21 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * Totally update 
      * @param Request $request
      * @param int     $id
      * @param int     $lock
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\LockkeyType",
+     *     output="AppBundle\Entity\Lockkey",
+     *     statusCodes={
+     *         204 = "Returned when an existing lock key relationship has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function putAvailablekeysAction(Request $request, $lock, $id)
     {
@@ -136,11 +168,21 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
 
 
     /**
+     * Update
      * @param Request $request
      * @param int     $id
      * @param int     $lock
      * @return View|\Symfony\Component\Form\Form
      *
+     * @ApiDoc(
+     *     input="AppBundle\Form\Type\LockkeyType",
+     *     output="AppBundle\Entity\Lockkey",
+     *     statusCodes={
+     *         204 = "Returned when an existing lock key relationship has been successful updated",
+     *         400 = "Return when errors",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function patchAvailablekeysAction(Request $request, $lock, $id)
     {
@@ -171,10 +213,17 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
 
 
     /**
+     * Delete a lock key relationship
      * @param int $id
      * @param int $lock
      * @return View
      *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204 = "Returned when an existing lock key relationship has been successful deleted",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
     public function deleteAvailablekeysAction($lock, $id)
     {
