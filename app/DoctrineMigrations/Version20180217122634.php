@@ -17,7 +17,7 @@ class Version20180217122634 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         $pass='$2y$13$nSHPWKM.sp6mv9iosnKLlOcNXVbG/ZJlS0Vy7hzSymGoxZAwC1Q/S';
-        $this->addSql("INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES (NULL, 'an21', '$pass', '2'); ");
+        $this->addSql("INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES (NULL, 'an21', '$pass', '2'), (NULL, 'man21', '$pass', '4'); ");
 
     }
 

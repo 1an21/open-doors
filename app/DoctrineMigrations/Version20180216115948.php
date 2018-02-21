@@ -17,7 +17,7 @@ class Version20180216115948 extends AbstractMigration
     {
        $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         
-       $this->addSql("INSERT INTO `user_types` (`id`, `type`) VALUES (NULL, 'ROLE_ADMIN'), (NULL, 'ROLE_KEY_ADDER'), (NULL, 'ROLE_USER'); ");
+       $this->addSql("INSERT INTO `user_types` (`id`, `type`) VALUES (NULL, 'ROLE_ADMIN'), (NULL, 'ROLE_KEY_ADDER'), (NULL, 'ROLE_USER'), (NULL, 'ROLE_LOCK_ADDER'); ");
 
 
     }

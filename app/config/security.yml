@@ -33,7 +33,7 @@ security:
             provider: entity_provider
             guard:
                 authenticators:
-                     - app.jwt_token_authenticator
+                    - app.jwt_token_authenticator
         keys:
             pattern:  ^/key
             stateless: true
@@ -41,14 +41,14 @@ security:
             provider: entity_provider
             guard:
                 authenticators:
-                     - app.jwt_token_authenticator
+                      - app.jwt_token_authenticator
         employees:
             pattern:  ^/employee
             stateless: true
             anonymous: false
             provider: entity_provider
             guard:
-                  authenticators:
+                authenticators:
                       - app.jwt_token_authenticator
 
 

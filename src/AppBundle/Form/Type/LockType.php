@@ -21,7 +21,8 @@ class LockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description', TextType::class)
+            ->add('lock_name', TextType::class)
+            ->add('lock_pass', TextType::class)
         ;
     }
 

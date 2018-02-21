@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Controller\Locks\Locks;
 use AppBundle\Entity\Lock;
 use AppBundle\Entity\Repository\LockRepository;
 use AppBundle\Form\Type\LockType;
@@ -9,9 +10,12 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * Class LockController
  * @package AppBundle\Controller
@@ -78,6 +82,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
      */
     public function postAction(Request $request)
     {
+
         $form = $this->createForm(LockType::class, null, [
             'csrf_protection' => false,
         ]);
@@ -105,6 +110,33 @@ class LockController extends FOSRestController implements ClassResourceInterface
         $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
         $id=$lock->getId();
         return $this->getLockRepository()->createFindOneByIdQuery($id)->getOneOrNullResult();
+
+
+
+    }
+    /**
+     * @Route("/locks/try")
+     * @Method ({"POST"})
+     * @Security("has_role('ROLE_LOCK_ADDER')")
+     */
+    public function postTryAction(Request $request){
+
+        $form = $this->createForm(LockType::class, null, [
+            'csrf_protection' => false,
+        ]);
+
+        $form->submit($request->request->all());
+        if (!$form->isValid()) {
+            return $form;
+        }
+
+        $data =(array)$form->getName();
+        $name_pass=json_encode($data);
+
+        $s= new Locks();
+        $s->qwerty($name_pass);
+
+        return new Response($name_pass);
     }
 
     /**
@@ -236,4 +268,5 @@ class LockController extends FOSRestController implements ClassResourceInterface
     {
         return $this->get('crv.doctrine_entity_repository.lock');
     }
+
 }

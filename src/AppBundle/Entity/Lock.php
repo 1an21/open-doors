@@ -19,12 +19,19 @@ class Lock
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+   
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", length=65535)
+     * @ORM\Column(name="lock_name", type="text", length=65535)
      */
-    private $description;
+    private $lock_name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lock_pass", type="text", length=65535)
+     */
+    private $lock_pass;
     /**
      * Get id
      *
@@ -35,26 +42,53 @@ class Lock
         return $this->id;
     }
     /**
-     * Set description
+    
+
+    /**
+     * Set lockName
      *
-     * @param string $description
+     * @param string $lockName
      *
      * @return Lock
      */
-    public function setDescription($description)
+    public function setLockName($lockName)
     {
-        $this->description = $description;
+        $this->lock_name = $lockName;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get lockName
      *
      * @return string
      */
-    public function getDescription()
+    public function getLockName()
     {
-        return $this->description;
+        return $this->lock_name;
+    }
+
+    /**
+     * Set lockPass
+     *
+     * @param string $lockPass
+     *
+     * @return Lock
+     */
+    public function setLockPass($lockPass)
+    {
+        $this->lock_pass = $lockPass;
+
+        return $this;
+    }
+
+    /**
+     * Get lockPass
+     *
+     * @return string
+     */
+    public function getLockPass()
+    {
+        return $this->lock_pass;
     }
 }
