@@ -28,6 +28,11 @@ class Version20180217122634 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         $this->addSql(" DELETE FROM `users` WHERE `users`.`username` = 'an21';");
+<<<<<<< HEAD
+        $this->addSql(" DELETE FROM `users` WHERE `users`.`username` = 'man21';");
+       
+=======
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
 
     }
 }

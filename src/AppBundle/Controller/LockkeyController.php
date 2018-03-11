@@ -3,7 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Lockkey;
+<<<<<<< HEAD
+use AppBundle\Entity\Key;
+=======
 use AppBundle\Entity\Repository\LockRepository;
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
 use AppBundle\Entity\Repository\LockkeyRepository;
 use AppBundle\Form\Type\LockkeyType;
 use FOS\RestBundle\View\View;
@@ -13,6 +17,12 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+<<<<<<< HEAD
+use Predis\Client;
+
+
+=======
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
 /**
  * Class KeyController
  * @package AppBundle\Controller
@@ -83,7 +93,11 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     {
         $lockk=$this->getLockRepository()->createFindOneByIdQuery($lock)->getOneOrNullResult();
         if ($lockk === null) {
+<<<<<<< HEAD
+        return new View("Doesnt exist lock $lock", Response::HTTP_NOT_FOUND);
+=======
         return new View('Doesnt exist', Response::HTTP_NOT_FOUND);
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
         }
         $em = $this->get('doctrine')->getManager();
         $locks=$em->getRepository('AppBundle:Lock')->findOneById($lock);
@@ -113,9 +127,39 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
             '_format' => $request->get('_format'),
         ];
 
+<<<<<<< HEAD
+         $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
+
+        $id=$lockkey->getLock();
+        $ids=$lockkey->getKey();
+
+        $config=$this->container->getParameter('redis');
+        try {
+            $predisClient = new Client($config);
+        }
+        catch (Exception $e){
+            die($e->getMessage());
+        }
+
+        $lock=$em->getRepository('AppBundle:Lock')->findOneById($id);
+        $name_lock=$lock->getLockName();
+
+        $keys=$em->getRepository('AppBundle:Key')->findOneById($ids);
+        $tag_key=$keys->getTag();
+        $id=$keys->getId();
+
+        $lock_key= $name_lock.':'.$tag_key;
+        $predisClient->set($lock_key, 1);
+        $rr=$predisClient->get($lock_key);
+
+
+        return $this->getLockKeyRepository()->findLockKeyQuery($lock, $id)->getOneOrNullResult();
+
+=======
         $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
         $id=$lockkey->getId();
         return $this->getLockkeyRepository()->findIdQuery($id)->getOneOrNullResult();
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
     }
 
     /**
@@ -230,7 +274,11 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
         $key = $this->getLockKeyRepository()->deleteLockKeyQuery($lock, $id)->getResult();
         if ($key== 0) {
             return new View("This id $id doesnt exist"); }
+<<<<<<< HEAD
+        return new View("Deleted key $id for lock $lock");
+=======
         return new View("Deleted user $id");
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
     }
 
     /**
@@ -244,4 +292,8 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     {
         return $this->get('crv.doctrine_entity_repository.lock');
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
 }

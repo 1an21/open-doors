@@ -7,6 +7,14 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+<<<<<<< HEAD
+    redis: 'tcp://163.172.90.25:2003' 
+    broker_ip: '163.172.90.25'
+    broker_port: '9002'
+    broker_name: 'grabber'
+    broker_pass: 'toor'
+=======
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
 
 framework:
     #esi:             ~
@@ -120,4 +128,16 @@ doctrine_migrations:
     namespace: Application\Migrations
     table_name: migration_versions
     name: Application Migrations
+<<<<<<< HEAD
     organize_migrations: false
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://163.172.90.25:2003
+
+    
+=======
+    organize_migrations: false
+>>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
