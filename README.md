@@ -1,34 +1,17 @@
 **Rest API with JWT Authentication** 
 
-Register:
-`curl -X POST http://localhost:8000/register -d _username=test -d _password=test`
+To use mosquitto:
 
-Get token and login:
-`curl -X POST http://localhost:8000/login_check -d _username=test -d _password=test`
+`sudo apt-get install php-pear`
 
+`sudo apt-get install php7.0-dev`
 
-This links are available: 
+`sudo apt-get install libmosquitto-dev`
 
-/locks (Allowed Method: GET, POST)
+`sudo pecl install Mosquitto-alpha`
 
-/locks/{id} (Allowed Method: GET, DELETE, PUT, PATCH)
+Add extension=mosquitto.so under Dynamic Extensions of the file /etc/php/7.0/cli/php.ini
 
-/keys (Allowed Method: GET, POST) 
-
-/keys/{id} (Allowed Method: GET, DELETE, PUT, PATCH)
-
-/employees (Allowed Method: GET, POST)
-
-/employees/{id} (Allowed Method: GET, DELETE, PUT, PATCH)
-
-/employees/{id}/keys (Allowed Method: GET)
-
-/employees/{id}/keys/{id} (Allowed Method: GET, DELETE, PUT, PATCH)
-
-locks/{id}/availablekeys (Allowed Method: GET)
-
-locks/{id}/availablekeys/{id} (Allowed Method: GET, DELETE, PUT, PATCH)
-
-/login_check
-
-/register
+Documentation is available here:  
+https://api-test.opendoors.od.ua:1013/doc
+ 
