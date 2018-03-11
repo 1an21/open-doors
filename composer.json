@@ -36,14 +36,10 @@
         "willdurand/faker-bundle": "^1.3",
         "knplabs/knp-paginator-bundle": "^2.5",
         "lexik/jwt-authentication-bundle": "^2.4",
-<<<<<<< HEAD
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "symfony-bundles/redis-bundle": "^1.0",
         "snc/redis-bundle": "2.x-dev",
         "predis/predis": "^1.1"
-=======
-        "doctrine/doctrine-migrations-bundle": "^1.0"
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -75,7 +71,6 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-<<<<<<< HEAD
             "file": "app/config/parameters.yml",
                 "env-map": {
                       "database_port" : "STORAGE_PORT",
@@ -86,9 +81,6 @@
                       "jwt_key_pass_phrase" : "PASSWORD_KEYS_API",
                       "cors_allow_origin" : "*"
      }
-=======
-            "file": "app/config/parameters.yml"
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
         }
     }
 }

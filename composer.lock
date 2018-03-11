@@ -4,13 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "hash": "ab14a423dfcc2b714832c51238c69def",
     "content-hash": "c08a52655ea16c1794a6f67442db7b91",
-=======
-    "hash": "0dc6886ad12380d9dbb5e87ee9ab0a59",
-    "content-hash": "c68a3802906a2087e7c0b598e38ad89e",
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2278,7 +2273,6 @@
             "time": "2015-07-25 16:39:46"
         },
         {
-<<<<<<< HEAD
             "name": "predis/predis",
             "version": "v1.1.1",
             "source": {
@@ -2329,8 +2323,6 @@
             "time": "2016-06-16 16:22:20"
         },
         {
-=======
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
             "name": "psr/cache",
             "version": "1.0.1",
             "source": {
@@ -2591,7 +2583,6 @@
             "time": "2018-01-11 05:54:03"
         },
         {
-<<<<<<< HEAD
             "name": "snc/redis-bundle",
             "version": "dev-master",
             "source": {
@@ -2657,8 +2648,6 @@
             "time": "2018-01-16 12:43:16"
         },
         {
-=======
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.9",
             "source": {
@@ -2713,7 +2702,6 @@
             "time": "2018-01-23 07:37:21"
         },
         {
-<<<<<<< HEAD
             "name": "symfony-bundles/redis-bundle",
             "version": "v1.0.1",
             "source": {
@@ -2770,8 +2758,6 @@
             "time": "2017-10-16 21:05:28"
         },
         {
-=======
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
             "name": "symfony/monolog-bundle",
             "version": "v2.12.1",
             "source": {
@@ -3811,13 +3797,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-<<<<<<< HEAD
     "stability-flags": {
         "snc/redis-bundle": 20
     },
-=======
-    "stability-flags": [],
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

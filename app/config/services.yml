@@ -36,9 +36,5 @@ services:
             - AppBundle\Entity\Employeekey
     app.jwt_token_authenticator:
             parent: lexik_jwt_authentication.security.guard.jwt_token_authenticator
-<<<<<<< HEAD
             class: AppBundle\Security\Guard\JWTAuthenticator
           
-=======
-            class: AppBundle\Security\Guard\JWTAuthenticator
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36

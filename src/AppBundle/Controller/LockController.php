@@ -118,7 +118,6 @@ class LockController extends FOSRestController implements ClassResourceInterface
      * @Route("/locks/try")
      * @Method ({"POST"})
      * @Security("has_role('ROLE_LOCK_ADDER')")
-<<<<<<< HEAD
      * @ApiDoc(
      *     output="AppBundle\Entity\Lock",
      *     statusCodes={
@@ -129,11 +128,6 @@ class LockController extends FOSRestController implements ClassResourceInterface
      */
     public function postTryAction(Request $request){
         
-=======
-     */
-    public function postTryAction(Request $request){
-
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
         $form = $this->createForm(LockType::class, null, [
             'csrf_protection' => false,
         ]);
@@ -142,7 +136,6 @@ class LockController extends FOSRestController implements ClassResourceInterface
         if (!$form->isValid()) {
             return $form;
         }
-<<<<<<< HEAD
         $data=$form->getData();
         $name=$request->request->get('lock_name');
         $pass=$request->request->get('lock_pass');
@@ -172,16 +165,6 @@ class LockController extends FOSRestController implements ClassResourceInterface
         $data = str_replace("olddata","newdata",$data);
         file_put_contents($filename,$data);
         return $data;
-=======
-
-        $data =(array)$form->getName();
-        $name_pass=json_encode($data);
-
-        $s= new Locks();
-        $s->qwerty($name_pass);
-
-        return new Response($name_pass);
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
     }
 
     /**

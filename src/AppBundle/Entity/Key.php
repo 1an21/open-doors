@@ -25,13 +25,10 @@ class Key
      */
     private $tag;
     /**
-<<<<<<< HEAD
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $description;
     /**
-=======
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
      * Get idKey
      *
      * @return integer
@@ -65,7 +62,6 @@ class Key
     {
         return $this->tag;
     }
-<<<<<<< HEAD
 
     /**
      * Set description
@@ -90,6 +86,4 @@ class Key
     {
         return $this->description;
     }
-=======
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
 }

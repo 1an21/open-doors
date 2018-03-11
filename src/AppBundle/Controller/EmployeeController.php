@@ -223,15 +223,9 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
     {
         $employee = $this->getEmployeeRepository()->deleteQuery($id)->getResult();
         if ($employee == 0) {
-<<<<<<< HEAD
             return new View("Doent exist $id");
         }
         return new View("Deleted user $id");
-=======
-            return new Response(sprintf('This id %s doesnt exist', $id));
-        }
-        return new Response(sprintf('Deleted user #%s', $id));
->>>>>>> 2a4f54938a784374e74a61859c0a0e896994ba36
     }
 
     /**
