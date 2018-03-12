@@ -141,7 +141,8 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
         $rr=$predisClient->get($lock_key);
 
 
-        return $this->getLockKeyRepository()->findLockKeyQuery($lock, $id)->getOneOrNullResult();
+        $id=$lockkey->getId();
+        return $this->getLockkeyRepository()->findIdQuery($id)->getOneOrNullResult();
 
     }
 
