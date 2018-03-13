@@ -22,8 +22,9 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT l
+            SELECT l, e
             FROM AppBundle:Lockkey l
+            INNER JOIN AppBundle:Employeekey e WITH l.key = e.rkey
             WHERE l.lock = :lock
             "
         );

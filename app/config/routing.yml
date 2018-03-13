@@ -32,4 +32,6 @@ emplkey:
 lockkey:
     resource: "@AppBundle/Controller/LockkeyController.php"
     type: rest
-
+masterkey:
+    resource: "@AppBundle/Controller/MasterKeyController.php"
+    type: rest

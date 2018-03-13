@@ -7,7 +7,7 @@ class Locks{
         //$broker_port=$this->getParameter('broker_port');
         //$broker_name=$this->getParameter('broker_name');
         //$broker_pass=$this->getParameter('broker_pass');
-        $client = new \Mosquitto\Client('aaaa');
+        $client = new \Mosquitto\Client('aaaaaa');
         $client->onConnect([$this,'connect']);
         $client->onDisconnect([$this,'disconnect']);
         $client->onPublish([$this,'publish']);
@@ -16,9 +16,6 @@ class Locks{
         $arr = array('lock_name'=>$username, 'lock_pass'=>$pass); 
         $arr=json_encode($arr);
         $mid = $client->publish('new-locks', $arr);
-
-
-
         //$client->disconnect();
         unset($client);
     }

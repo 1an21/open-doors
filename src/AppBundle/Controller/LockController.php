@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * Class LockController
  * @package AppBundle\Controller
@@ -117,7 +116,6 @@ class LockController extends FOSRestController implements ClassResourceInterface
     /**
      * @Route("/locks/try")
      * @Method ({"POST"})
-     * @Security("has_role('ROLE_LOCK_ADDER')")
      * @ApiDoc(
      *     output="AppBundle\Entity\Lock",
      *     statusCodes={
