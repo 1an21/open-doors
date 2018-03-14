@@ -22,10 +22,10 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT l,em
-            FROM AppBundle:Lockkey l
+            SELECT l as lockkey, em as employee
+            FROM AppBundle:Lockkey l, AppBundle:Employee em
             LEFT JOIN AppBundle:Employeekey e WITH l.key = e.rkey
-            LEFT JOIN AppBundle:Employee em WITH e.employee = em.id
+            LEFT JOIN em WITH e.employee = em.id
             WHERE l.lock = :lock
             "
         );
@@ -37,7 +37,7 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT l, em.id, em.surname, em.name, em.age
+            SELECT l as lockkey, em as employee
             FROM AppBundle:Lockkey l
             LEFT JOIN AppBundle:Employeekey e WITH l.key = e.rkey
             LEFT JOIN AppBundle:Employee em WITH e.employee = em.id

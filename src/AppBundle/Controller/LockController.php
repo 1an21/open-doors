@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Controller\Locks\Locks;
+use AppBundle\Controller\BrokerController;
 use AppBundle\Entity\Lock;
 use AppBundle\Entity\Repository\LockRepository;
 use AppBundle\Form\Type\LockType;
@@ -92,9 +92,6 @@ class LockController extends FOSRestController implements ClassResourceInterface
             return $form;
         }
 
-        /**
-         * @var $Lock Lock
-         */
         $lock = $form->getData();
 
         $em = $this->getDoctrine()->getManager();
@@ -113,6 +110,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
 
 
     }
+
     /**
      * @Route("/locks/try")
      * @Method ({"POST"})
@@ -144,10 +142,15 @@ class LockController extends FOSRestController implements ClassResourceInterface
 
         $lock->setLockPass(base64_encode($pass));
         $l_pass=$lock->getLockPass();
-        //$ll_pass=$lock->setLockPass(base64_decode($l_pass));
-        //$ll_pass=$lock->getLockPass();
-        $mqtt= new Locks();
-        $mqtt->qwerty($l_name, $l_pass);
+        
+        $mqtt= new BrokerController();
+        $broker_ip=$this->getParameter('broker_ip');
+        $broker_port=$this->getParameter('broker_port');
+        $broker_name=$this->getParameter('broker_name');
+        $broker_pass=$this->getParameter('broker_pass');
+        $broker_client_name=$this->getParameter('broker_client_name');
+        $topic_name=$this->getParameter('topic_name');
+        $mqtt->pushMqtt($l_name, $l_pass, $broker_ip, $broker_port, $broker_name,$broker_pass, $broker_client_name, $topic_name);
 
         
         return $data;
@@ -155,16 +158,42 @@ class LockController extends FOSRestController implements ClassResourceInterface
 
     /**
      * @Route("/locks/config")
+     * @Method ({"GET"})
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lock",
+     *     statusCodes={
+     *         204 = "Returned when a config successfully created",
+     *         404 = "Return when not found"
+     *     }
+     * )
      */
-    public function configAction(){
+    public function getConfigAction($lock){
 
-        $filename="file.txt";
-        $data = file_get_contents($filename);
-        $data = str_replace("olddata","newdata",$data);
-        file_put_contents($filename,$data);
+        $em = $this->get('doctrine')->getManager();
+        $lock=$em->getRepository('AppBundle:Lock')->findOneById($lock);
+        $name_lock=$lock->getLockName();
+        $pass_lock=$lock->getLockPass();
+
+        $broker_ip=$this->getParameter('broker_ip');
+        $broker_port=$this->getParameter('broker_port');
+
+        $template="mqtt_template.h";
+        $newfile="mqtt.h";
+        $data = file_get_contents($template);
+        $data = str_replace('lock',"$name_lock",$data);
+        $data = str_replace('toor',"$pass_lock",$data);
+        $data = str_replace('Somelock',"$name_lock",$data);
+        $data = str_replace('163.172.90.25',"$broker_ip",$data);
+        $data = str_replace('9002',"$broker_port",$data);
+        file_put_contents($newfile,$data);
+        header ("Content-Type: application/octet-stream");
+        header ("Accept-Ranges: bytes");
+        header ("Content-Length: ".filesize($newfile));
+        header ("Content-Disposition: attachment; filename=".$newfile);  
         return $data;
     }
 
+    
     /**
      * Totally update lock
      * @param Request $request

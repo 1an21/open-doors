@@ -79,7 +79,14 @@
                       "database_user" : "STORAGE_USERNAME",
                       "database_password" : "STORAGE_PASSWORD",
                       "jwt_key_pass_phrase" : "PASSWORD_KEYS_API",
-                      "cors_allow_origin" : "*"
+                      "cors_allow_origin" : "*",
+                      "redis_ip_port" : "STORAGE_REDIS_API",
+                      "brok_ip" : "STORAGE_BROKER_IP",
+                      "brok_port" : "STORAGE_BROKER_PORT",
+                      "brok_name" : "STORAGE_BROKER_NAME",
+                      "brok_pass" : "STORAGE_BROKER_PASS",
+                      "brok_client_name" : "STORAGE_BROKER_CLIENT_NAME",
+                      "top_name" : "STORAGE_BROKER_TOPIC_NAME"
      }
         }
     }

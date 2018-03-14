@@ -43,7 +43,7 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      */
     public function getAvailablekeysAction($lock, $id)
     {
-        $key = $this->getLockKeyRepository()->findLockKeyQuery($lock,$id)->getOneOrNullResult();
+        $key = $this->getLockKeyRepository()->findLockKeyQuery($lock,$id)->getResult();
         if ($key === null) {
             return new View("Dont exist key with id $id for lock $lock");
         }

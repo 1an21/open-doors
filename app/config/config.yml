@@ -7,12 +7,13 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    redis: 'tcp://163.172.90.25:2003' 
-    broker_ip: '163.172.90.25'
-    broker_port: '9002'
-    broker_name: 'grabber'
-    broker_pass: 'toor'
-
+    redis: '%redis_ip_port%'
+    broker_ip: '%brok_ip%'
+    broker_port: '%brok_port%'
+    broker_name: '%brok_name%'
+    broker_pass: '%brok_pass%'
+    broker_client_name: '%brok_client_name%'
+    topic_name: '%top_name%'
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
