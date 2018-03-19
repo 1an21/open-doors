@@ -28,3 +28,12 @@ parameters:
     jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'  # ssh public key path
     jwt_key_pass_phrase:  ''                                         # ssh key pass phrase
     jwt_token_ttl:        3600
+    redis_host : '163.172.90.25'
+    redis_port : '2003'
+    redis_scheme: 'tcp'
+    brok_ip : '163.172.90.25'
+    brok_port : '9002'
+    brok_name : 'api_service'
+    brok_pass : 'api_service'
+    brok_client_name : 'Apiservice'
+    top_name : 'new-locks'

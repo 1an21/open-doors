@@ -22,10 +22,8 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT l as lockkey, em as employee
-            FROM AppBundle:Lockkey l, AppBundle:Employee em
-            LEFT JOIN AppBundle:Employeekey e WITH l.key = e.rkey
-            LEFT JOIN em WITH e.employee = em.id
+            SELECT l as lockkey
+            FROM AppBundle:Lockkey l
             WHERE l.lock = :lock
             "
         );
@@ -37,10 +35,8 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT l as lockkey, em as employee
+            SELECT l as lockkey
             FROM AppBundle:Lockkey l
-            LEFT JOIN AppBundle:Employeekey e WITH l.key = e.rkey
-            LEFT JOIN AppBundle:Employee em WITH e.employee = em.id
             WHERE l.lock = :lock
             AND l.key= :id
             "
@@ -49,6 +45,23 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('id', $id);
         return $query;
     }
+
+    // public function findLockKeyQuery($lock, $id)
+    // {
+    //     $query = $this->_em->createQuery(
+    //         "
+    //         SELECT e, ll
+    //         FROM AppBundle:Employeekey e
+    //         LEFT JOIN AppBundle:Lockkey l WITH e.id = l.key
+    //         LEFT JOIN AppBundle:Lock ll WITH l.lock = ll.id
+    //         WHERE l.lock = :lock
+    //         AND l.key= :id
+    //         "
+    //     );
+    //     $query->setParameter('lock', $lock);
+    //     $query->setParameter('id', $id);
+    //     return $query;
+    // }
 
     public function findOnlyLockKeyQuery($lock, $id)
     {

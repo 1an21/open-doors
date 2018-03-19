@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Predis\Client;
 
-
 /**
  * Class KeyController
  * @package AppBundle\Controller
@@ -43,10 +42,17 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      */
     public function getAvailablekeysAction($lock, $id)
     {
-        $key = $this->getLockKeyRepository()->findLockKeyQuery($lock,$id)->getResult();
+        $key = $this->getLockKeyRepository()->findLockKeyQuery($lock,$id)->getOneOrNullResult();
         if ($key === null) {
             return new View("Dont exist key with id $id for lock $lock");
         }
+        //$keys=(object)array($key);
+// $serializer = $this->get('jms_serializer');
+//         $keys = $serializer->serialize($key,'json');
+//         $key = json_decode($keys);
+//         $json = json_encode($key, JSON_FORCE_OBJECT, JSON_UNESCAPED_SLASHES);
+//        $jsons =  preg_replace('/\p{Cc}+/u', '', $json);
+//         return $jsons;
         return $key;
     }
 
@@ -120,9 +126,16 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
         $id=$lockkey->getLock();
         $ids=$lockkey->getKey();
 
-        $config=$this->container->getParameter('redis');
+        $redis_ip=$this->container->getParameter('redis_ip');
+        $redis_ports=$this->container->getParameter('redis_ports');
+        $redis_schemes=$this->container->getParameter('redis_schemes');
+
         try {
-            $predisClient = new Client($config);
+            $predisClient = new Client(array(
+    'scheme'   => $redis_schemes,
+    'host'     => $redis_ip,
+    'port'     => $redis_ports
+));
         }
         catch (Exception $e){
             die($e->getMessage());

@@ -7,7 +7,9 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    redis: '%redis_ip_port%'
+    redis_ip: '%redis_host%'
+    redis_ports: '%redis_port%'
+    redis_schemes: '%redis_scheme%'
     broker_ip: '%brok_ip%'
     broker_port: '%brok_port%'
     broker_name: '%brok_name%'

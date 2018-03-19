@@ -1,9 +1,10 @@
-const char* lock_name = "lock";
+const char* 402_name = "402";
 const char* mqtt_server = "163.172.90.25";
 const int mqtt_port = 9002;
-const char* mqtt_user = "lock";
-const char* mqtt_pass = "passs";
-const char* post_topic = "fake-lock-try";
-char* success_topic = "fake-lock-open";
-char* deny_topic = "fake-lock-deny";
-char* newcard_topic = "fake-lock-new";
+const char* mqtt_user = "402";
+const char* mqtt_pass = "pass";
+const char* post_topic = "locks/402/try";
+char* success_topic = "locks/402/result/open";
+char* deny_topic = "locks/402/result/deny";
+char* newcard_topic = "locks/402/new-key/waiting-for-new-key"; 
+char* key_added_topic = "locks/402/new-key/key_added";
