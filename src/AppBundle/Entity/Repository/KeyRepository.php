@@ -4,6 +4,11 @@ namespace AppBundle\Entity\Repository;
 
 class KeyRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function searchQuery()
+    {
+        return $this->_em->getRepository('AppBundle:Key')->createQueryBuilder('k');
+    }
+
     public function findAllKeyQuery()
     {
         return $this->_em->createQuery(

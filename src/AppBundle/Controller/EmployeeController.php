@@ -46,7 +46,7 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
     }
 
     /**
-     * Gets a collection of Employees
+     * Gets a collection of Employees (for use filter(name, surname, age): /employees?filter= )
      *
      * @return array
      *
@@ -58,9 +58,17 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
      *     }
      * )
      */
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
-        return $this->getEmployeeRepository()->createFindAllQuery()->getResult();
+//        return $this->getEmployeeRepository()->createFindAllQuery()->getResult();
+        $queryBuilder = $this->getEmployeeRepository()->searchQuery();
+        if ($request->query->getAlnum('filter')) {
+            $queryBuilder->where('e.name LIKE :name')
+                ->orwhere('e.surname LIKE :name')
+                ->orwhere('e.age LIKE :name')
+                ->setParameter('name', '%' . $request->query->getAlnum('filter') . '%');
+        }
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 /**
  * Class KeyController
  * @package AppBundle\Controller
@@ -41,13 +42,13 @@ class KeyController extends FOSRestController implements ClassResourceInterface
     {
         $key = $this->getKeyRepository()->findKeyQuery($id)->getOneOrNullResult();
         if ($key === null) {
-            return new Response(sprintf('Dont exist key with id %s', $id));
+            return new Response(sprintf('Dont exist key with id %s', $id),Response::HTTP_NOT_FOUND);
         }
         return $key;
     }
 
     /**
-     * Gets a collection of keys
+     * Gets a collection of keys (for use filter(tag and descr): /keys?filter= )
      *
      * @return array
      *
@@ -59,9 +60,17 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      *     }
      * )
      */
-    public function cgetAction()
+
+    public function cgetAction(Request $request)
     {
-        return $this->getKeyRepository()->findAllKeyQuery()->getResult();
+//        return $this->getKeyRepository()->findAllKeyQuery()->getResult();
+        $queryBuilder = $this->getKeyRepository()->searchQuery();
+        if ($request->query->getAlnum('filter')) {
+            $queryBuilder->where('k.tag LIKE :tag')
+                ->orwhere('k.description LIKE :tag')
+                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+        }
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -214,7 +223,7 @@ class KeyController extends FOSRestController implements ClassResourceInterface
     {
         $key = $this->getKeyRepository()->deleteKeyQuery($id)->getResult();
         if ($key == 0) {
-            return new View("This id $id doesnt exist");
+            return new View("This id $id doesnt exist", Response::HTTP_NOT_FOUND);
         }
         return new View("Deleted user $id");
     }

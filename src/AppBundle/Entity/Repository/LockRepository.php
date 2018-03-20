@@ -10,6 +10,11 @@ namespace AppBundle\Entity\Repository;
  */
 class LockRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function searchQuery()
+    {
+        return $this->_em->getRepository('AppBundle:Lock')->createQueryBuilder('l');
+    }
+
     public function createFindAllQuery()
     {
         return $this->_em->createQuery(

@@ -5,6 +5,13 @@ use Doctrine\DBAL\DriverManager;
 class LockkeyRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    public function searchQuery($lock)
+    {
+        return $this->_em->getRepository('AppBundle:Lockkey')->createQueryBuilder('lk')
+        ->where('lk.lock=:lock')
+        ->setParameter('lock', $lock);
+    }
+
     public function findIdQuery($id)
     {
         $query = $this->_em->createQuery(

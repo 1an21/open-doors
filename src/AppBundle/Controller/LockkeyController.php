@@ -6,6 +6,7 @@ use AppBundle\Entity\Lockkey;
 use AppBundle\Entity\Key;
 use AppBundle\Entity\Repository\LockkeyRepository;
 use AppBundle\Form\Type\LockkeyType;
+use AppBundle\Form\Type\KeyType;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -57,7 +58,7 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * Gets a collection of keys for locks
+     * Gets a collection of keys for locks (for use filter(search for all fields): /locks/{id}/availablekeys?filter= )
      *
      * @return array
      *
@@ -69,11 +70,29 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      *     }
      * )
      */
-    public function cgetAvailablekeysAction($lock){
+//    public function cgetAvailablekeysAction($lock){
+//
+//        return $this->getLockKeyRepository()->findLockQuery($lock)->getResult();
+//    }
 
-        return $this->getLockKeyRepository()->findLockQuery($lock)->getResult();
+    public function cgetAvailablekeysAction($lock, Request $request){
+
+        $queryBuilder = $this->getLockKeyRepository()->searchQuery($lock);
+        if ($request->query->getAlnum('filter')) {
+            $queryBuilder->join("lk.lock", "l")
+                ->join("lk.key", "k")
+                ->andwhere('l.lock_name LIKE :tag OR k.tag LIKE :tag OR k.description LIKE :tag')
+//                ->orwhere('l.lock_name LIKE :tag')
+//                ->orwhere('k.tag LIKE :tag')
+//                ->orwhere('k.description LIKE :tag')
+                //->andwhere('lk.lock = :lock')
+                ->setParameter('lock', $lock)
+                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+
+        }
+        return $queryBuilder->getQuery()->getResult();
     }
-
+   
 
     /**
      * Add a new lock key relationship

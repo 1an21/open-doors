@@ -62,9 +62,27 @@ class EmployeeKeyController extends FOSRestController implements ClassResourceIn
      *     }
      * )
      */
-    public function cgetKeysAction($employee){
+    public function cgetKeysAction($employee, Request $request){
+//        return $this->getEmployeekeyRepository()->findEmployeeQuery($employee)->getResult();
 
-        return $this->getEmployeekeyRepository()->findEmployeeQuery($employee)->getResult();
+        $queryBuilder = $this->getEmployeekeyRepository()->searchQuery($employee);
+        if ($request->query->getAlnum('filter')) {
+            $queryBuilder
+               ->join("ek.employee", "e")
+               ->join("ek.rkey", "k")
+                //->where('e.id = :employee')
+                //->andwhere('ek.employee = :employee')
+                ->andwhere('e.name LIKE :tag OR e.surname LIKE :tag OR e.age LIKE :tag OR k.tag LIKE :tag OR k.description LIKE :tag' )
+//                ->orwhere('e.surname LIKE :tag')
+//                ->orwhere('e.age LIKE :tag')
+//                ->orwhere('k.tag LIKE :tag')
+//                ->orwhere('k.description LIKE :tag')
+//                 ->orwhere('ek.description LIKE :tag')
+                ->setParameter('employee', $employee)
+                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+                
+        }
+        return $queryBuilder->getQuery()->getResult();
     }
 
 

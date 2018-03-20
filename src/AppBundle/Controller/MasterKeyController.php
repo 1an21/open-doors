@@ -61,7 +61,7 @@ class MasterKeyController extends FOSRestController implements ClassResourceInte
      */
     public function cgetAction()
     {
-        return $this->getKeyRepository()->findAllKeyQuery()->getResult();
+        return $this->getMasterKeyRepository()->findAllKeyQuery()->getResult();
     }
 
     /**

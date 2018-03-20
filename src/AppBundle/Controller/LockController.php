@@ -49,7 +49,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Gets a collection of Locks
+     * Gets a collection of Locks (for use filter(lock_name): /locks?filter= )
      *
      * @return array
      *
@@ -61,9 +61,15 @@ class LockController extends FOSRestController implements ClassResourceInterface
      *     }
      * )
      */
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
-        return $this->getLockRepository()->createFindAllQuery()->getResult();
+//        return $this->getLockRepository()->createFindAllQuery()->getResult();
+        $queryBuilder = $this->getLockRepository()->searchQuery();
+        if ($request->query->getAlnum('filter')) {
+            $queryBuilder->where('l.lock_name LIKE :lock_name')
+                ->setParameter('lock_name', '%' . $request->query->getAlnum('filter') . '%');
+        }
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**

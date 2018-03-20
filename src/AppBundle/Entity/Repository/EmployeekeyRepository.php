@@ -5,7 +5,12 @@ namespace AppBundle\Entity\Repository;
 class EmployeekeyRepository extends \Doctrine\ORM\EntityRepository
 {
 
-
+    public function searchQuery($employee)
+    {
+        return $this->_em->getRepository('AppBundle:Employeekey')->createQueryBuilder('ek')
+        ->where('ek.employee=:employee')
+        ->setParameter('employee', $employee);
+    }
     public function findIdQuery($id)
     {
         $query = $this->_em->createQuery(
