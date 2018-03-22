@@ -73,7 +73,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Add a new lock
+     * Add a new lock (for broker)
      * @param Request $request
      * @return View|\Symfony\Component\Form\Form
      *
@@ -118,6 +118,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
+     * Add new lock
      * @Route("/locks/try")
      * @Method ({"POST"})
      * @ApiDoc(
@@ -128,7 +129,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
      *     }
      * )
      */
-    public function postTryAction(Request $request){
+    public function Action(Request $request){
         
         $form = $this->createForm(LockType::class, null, [
             'csrf_protection' => false,
@@ -163,8 +164,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * @Route("/locks/config")
-     
+     * Get file with configs for single lock   
      * @ApiDoc(
      *     output="AppBundle\Entity\Lock",
      *     statusCodes={

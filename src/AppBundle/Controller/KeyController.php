@@ -31,7 +31,7 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
      * @ApiDoc(
-     *     output="AppBundle\Entity\Rkey",
+     *     output="AppBundle\Entity\Key",
      *     statusCodes={
      *         200 = "Returned when successful",
      *         404 = "Return when not found"
@@ -53,7 +53,7 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      * @return array
      *
      * @ApiDoc(
-     *     output="AppBundle\Entity\Rkey",
+     *     output="AppBundle\Entity\Key",
      *     statusCodes={
      *         200 = "Returned when successful",
      *         404 = "Return when not found"
@@ -79,7 +79,7 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      * @return View|\Symfony\Component\Form\Form
      * @Security("has_role('ROLE_KEY_ADDER')")
      * @ApiDoc(
-     *     output="AppBundle\Entity\Rkey",
+     *     output="AppBundle\Entity\Key",
      *     statusCodes={
      *         201 = "Returned when a new key has been successful created",
      *         404 = "Return when not found"
@@ -122,8 +122,8 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      * @return View|\Symfony\Component\Form\Form
      *
      * @ApiDoc(
-     *     input="AppBundle\Form\Type\RkeyType",
-     *     output="AppBundle\Entity\Rkey",
+     *     input="AppBundle\Form\Type\KeyType",
+     *     output="AppBundle\Entity\Key",
      *     statusCodes={
      *         204 = "Returned when an existing key has been successful updated",
      *         400 = "Return when errors",
@@ -170,8 +170,8 @@ class KeyController extends FOSRestController implements ClassResourceInterface
      * @return View|\Symfony\Component\Form\Form
      *
      * @ApiDoc(
-     *     input="AppBundle\Form\Type\RkeyType",
-     *     output="AppBundle\Entity\Rkey",
+     *     input="AppBundle\Form\Type\KeyType",
+     *     output="AppBundle\Entity\Key",
      *     statusCodes={
      *         204 = "Returned when an existing key has been successful updated",
      *         400 = "Return when errors",

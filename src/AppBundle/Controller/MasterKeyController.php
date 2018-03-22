@@ -52,7 +52,7 @@ class MasterKeyController extends FOSRestController implements ClassResourceInte
      * @return array
      *
      * @ApiDoc(
-     *     output="AppBundle\Entity\Rkey",
+     *     output="AppBundle\Entity\MasterKey",
      *     statusCodes={
      *         200 = "Returned when successful",
      *         404 = "Return when not found"
@@ -70,7 +70,7 @@ class MasterKeyController extends FOSRestController implements ClassResourceInte
      * @return View|\Symfony\Component\Form\Form
      * @Security("has_role('ROLE_KEY_ADDER')")
      * @ApiDoc(
-     *     output="AppBundle\Entity\Rkey",
+     *     output="AppBundle\Entity\MasterKey",
      *     statusCodes={
      *         201 = "Returned when a new key has been successful created",
      *         404 = "Return when not found"
