@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="masterkey")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\MasterKeyRepository")
+* @Gedmo\Loggable
  */
 class MasterKey
 {
@@ -22,6 +23,7 @@ class MasterKey
     private $id;
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Gedmo\Versioned
      */
     private $tag;
     

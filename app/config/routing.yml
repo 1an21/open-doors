@@ -35,3 +35,6 @@ lockkey:
 masterkey:
     resource: "@AppBundle/Controller/MasterKeyController.php"
     type: rest
+log:
+    resource: "@AppBundle/Controller/LogController.php"
+    type: rest

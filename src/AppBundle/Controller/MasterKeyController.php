@@ -80,7 +80,7 @@ class MasterKeyController extends FOSRestController implements ClassResourceInte
     public function postAction(Request $request)
     {
 
-        $form = $this->createForm(KeyType::class, null, [
+        $form = $this->createForm(MasterKeyType::class, null, [
             'csrf_protection' => false,
         ]);
 

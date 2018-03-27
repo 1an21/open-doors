@@ -39,8 +39,17 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\MasterKey
+    crv.doctrine_entity_repository.ExtLogEntries:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ExtLogEntries        
     app.jwt_token_authenticator:
             parent: lexik_jwt_authentication.security.guard.jwt_token_authenticator
             class: AppBundle\Security\Guard\JWTAuthenticator
+    gedmo.listener.loggable:
+        class: Gedmo\Loggable\LoggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
     
             
