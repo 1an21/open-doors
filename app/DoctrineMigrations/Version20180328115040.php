@@ -16,7 +16,7 @@ class Version20180328115040 extends AbstractMigration
     public function up(Schema $schema)
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        $this->addSql("CREATE EVENT `delete_keys` ON SCHEDULE EVERY 1 MINUTE ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM rkey WHERE rkey.id NOT IN( SELECT rkey FROM lockkey) AND rkey.id NOT IN (SELECT rkey FROM employeekey)");
+        $this->addSql("CREATE EVENT `delete_keys` ON SCHEDULE EVERY 1 HOUR ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM rkey WHERE rkey.id NOT IN( SELECT rkey FROM lockkey) AND rkey.id NOT IN (SELECT rkey FROM employeekey)");
         $this->addSql("SET global event_scheduler = ON;");
     }
 
