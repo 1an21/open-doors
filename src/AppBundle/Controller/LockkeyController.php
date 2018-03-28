@@ -286,13 +286,13 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
     public function deleteAvailablekeysAction($lock, $id)
     {
         $key = $this->getLockKeyRepository()->findLockKeyQuery($lock, $id)->getOneOrNullResult();
-        // if ($key== 0) {
-        //     return new View("This id $id doesnt exist"); }
+         if ($key=== null) {
+            return new View("This id $id doesnt exist", Response::HTTP_NOT_FOUND); }
         // return new View("Deleted key $id for lock $lock");
         $em = $this->getDoctrine()->getManager();
         $em->remove($key);
         $em->flush();
-        // return $key;
+        return new View("Deleted key ");
     }
 
     /**
