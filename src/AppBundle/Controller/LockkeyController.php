@@ -289,27 +289,37 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
          if ($key=== null) {
             return new View("This id $id doesnt exist", Response::HTTP_NOT_FOUND); }
         // return new View("Deleted key $id for lock $lock");
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($key);
         
+        $em = $this->get('doctrine')->getManager();
+        $locks=$em->getRepository('AppBundle:Lock')->findOneById($lock);
+        $kkey=$em->getRepository('AppBundle:Key')->findOneById($id);
+        $em->flush();
+
+        $lockkey=new Lockkey();
+        $lockkey->setLock($locks);
+        $lockkey->setKey($kkey);
 
         $redis_ip=$this->container->getParameter('redis_ip');
         $redis_ports=$this->container->getParameter('redis_ports');
         $redis_schemes=$this->container->getParameter('redis_schemes');
-        $id=$lockkey->getLock();
-        $ids=$lockkey->getKey();
+
         try {
             $predisClient = new Client(array(
-    'scheme'   => $redis_schemes,
-    'host'     => $redis_ip,
-    'port'     => $redis_ports
-));
+            'scheme'   => $redis_schemes,
+            'host'     => $redis_ip,
+            'port'     => $redis_ports
+        ));
         }
         catch (Exception $e){
             die($e->getMessage());
-        }
-        $lock=$em->getRepository('AppBundle:Lock')->findOneById($id);
-        $name_lock=$lock->getLockName();
+        }    
+
+        $id=$lockkey->getLock();
+        $ids=$lockkey->getKey();
+
+
+        $lockss=$em->getRepository('AppBundle:Lock')->findOneById($id);
+        $name_lock=$lockss->getLockName();
 
         $keys=$em->getRepository('AppBundle:Key')->findOneById($ids);
         $tag_key=$keys->getTag();
@@ -317,7 +327,8 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
 
         $lock_key= $name_lock.':'.$tag_key;
         $predisClient->del($lock_key);
-
+        
+        $em->remove($key);
         $em->flush();
         return new View("Deleted key ");
     }
