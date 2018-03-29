@@ -291,6 +291,33 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
         // return new View("Deleted key $id for lock $lock");
         $em = $this->getDoctrine()->getManager();
         $em->remove($key);
+        
+
+        $redis_ip=$this->container->getParameter('redis_ip');
+        $redis_ports=$this->container->getParameter('redis_ports');
+        $redis_schemes=$this->container->getParameter('redis_schemes');
+        $id=$lockkey->getLock();
+        $ids=$lockkey->getKey();
+        try {
+            $predisClient = new Client(array(
+    'scheme'   => $redis_schemes,
+    'host'     => $redis_ip,
+    'port'     => $redis_ports
+));
+        }
+        catch (Exception $e){
+            die($e->getMessage());
+        }
+        $lock=$em->getRepository('AppBundle:Lock')->findOneById($id);
+        $name_lock=$lock->getLockName();
+
+        $keys=$em->getRepository('AppBundle:Key')->findOneById($ids);
+        $tag_key=$keys->getTag();
+
+
+        $lock_key= $name_lock.':'.$tag_key;
+        $predisClient->del($lock_key);
+
         $em->flush();
         return new View("Deleted key ");
     }
