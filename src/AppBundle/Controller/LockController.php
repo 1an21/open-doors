@@ -24,6 +24,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class LockController extends FOSRestController implements ClassResourceInterface
 {
     /**
+     * Gets an all locks and his keys
+     *
+     * 
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @ApiDoc(
+     *     output="AppBundle\Entity\Lock",
+     *     statusCodes={
+     *         200 = "Returned when successful",
+     *         404 = "Return when not found"
+     *     }
+     * )
+     */
+    public function cgetAllkeysAction()
+    {
+        return $this->getLockRepository()->FindAllQuery()->getResult();
+    }
+
+    /**
      * Gets an individual Lock
      *
      * @param int $id

@@ -48,4 +48,13 @@ class LockRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('id', $id);
         return $query;
     }
+    public function FindAllQuery()
+    {
+        return $this->_em->createQuery(
+            "
+            SELECT l
+            FROM AppBundle:Lockkey l
+            "
+        );
+    }
 }
