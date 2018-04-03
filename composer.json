@@ -47,7 +47,7 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -69,27 +69,7 @@
         "symfony-var-dir": "var",
         "symfony-web-dir": "web",
         "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml",
-                "env-map": {
-                      "database_port" : "STORAGE_PORT",
-                      "database_host" : "STORAGE_HOST",
-                      "database_name" : "STORAGE_DB_NAME",
-                      "database_user" : "STORAGE_USERNAME",
-                      "database_password" : "STORAGE_PASSWORD",
-                      "jwt_key_pass_phrase" : "PASSWORD_KEYS_API",
-                      "cors_allow_origin" : "*",
-                      "redis_host" : "STORAGE_BROKER_HOST",
-                      "redis_port" : "STORAGE_BROKER_PORT",
-                      "redis_scheme" : "STORAGE_BROKER_SCHEME",
-                      "brok_ip" : "BROKER_HOST",
-                      "brok_port" : "BROKER_PORT",
-                      "brok_name" : "BROKER_NAME",
-                      "brok_pass" : "BROKER_PASS",
-                      "brok_client_name" : "BROKER_CLIENT_NAME",
-                      "top_name" : "BROKER_TOPIC_NAME"
-     }
+        "symfony-assets-install": "relative"
+        
         }
-    }
 }
