@@ -29,9 +29,13 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT l 
-            FROM AppBundle:Lockkey l
-            WHERE l.lock = :lock
+            SELECT e.description, k.tag, l.lock_name, l.lock_pass, ee.name, ee.surname
+            FROM AppBundle:Employeekey e
+            JOIN AppBundle:Lockkey lk WITH e.rkey = lk.key
+            JOIN AppBundle:Lock l WITH lk.lock = l.id
+            JOIN AppBundle:Key k WITH lk.key = k.id
+            JOIN AppBundle:Employee ee WITH e.employee = ee.id
+            WHERE lk.lock = :lock
             "
         );
         $query->setParameter('lock', $lock);
@@ -42,10 +46,14 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT l 
-            FROM AppBundle:Lockkey l
-            WHERE l.lock = :lock
-            AND l.key= :id
+            SELECT e.description, k.tag, l.lock_name, l.lock_pass, ee.name, ee.surname
+            FROM AppBundle:Employeekey e
+            JOIN AppBundle:Lockkey lk WITH e.rkey = lk.key
+            JOIN AppBundle:Lock l WITH lk.lock = l.id
+            JOIN AppBundle:Key k WITH lk.key = k.id
+            JOIN AppBundle:Employee ee WITH e.employee = ee.id
+            WHERE lk.lock = :lock
+            AND lk.key= :id
             "
         );
         $query->setParameter('lock', $lock);

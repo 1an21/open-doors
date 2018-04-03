@@ -47,18 +47,12 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
         if ($key === null) {
             return new View("Dont exist key with id $id for lock $lock");
         }
-        //$keys=(object)array($key);
-// $serializer = $this->get('jms_serializer');
-//         $keys = $serializer->serialize($key,'json');
-//         $key = json_decode($keys);
-//         $json = json_encode($key, JSON_FORCE_OBJECT, JSON_UNESCAPED_SLASHES);
-//        $jsons =  preg_replace('/\p{Cc}+/u', '', $json);
-//         return $jsons;
+        
         return $key;
     }
 
     /**
-     * Gets a collection of keys for locks (for use filter(search for all fields): /locks/{id}/availablekeys?filter= )
+     * Gets a collection of keys for locks )
      *
      * @return array
      *
@@ -70,28 +64,28 @@ class LockkeyController extends FOSRestController implements ClassResourceInterf
      *     }
      * )
      */
-//    public function cgetAvailablekeysAction($lock){
-//
-//        return $this->getLockKeyRepository()->findLockQuery($lock)->getResult();
-//    }
+    public function cgetAvailablekeysAction($lock){
 
-    public function cgetAvailablekeysAction($lock, Request $request){
-
-        $queryBuilder = $this->getLockKeyRepository()->searchQuery($lock);
-        if ($request->query->getAlnum('filter')) {
-            $queryBuilder->join("lk.lock", "l")
-                ->join("lk.key", "k")
-                ->andwhere('l.lock_name LIKE :tag OR k.tag LIKE :tag OR k.description LIKE :tag')
-//                ->orwhere('l.lock_name LIKE :tag')
-//                ->orwhere('k.tag LIKE :tag')
-//                ->orwhere('k.description LIKE :tag')
-                //->andwhere('lk.lock = :lock')
-                ->setParameter('lock', $lock)
-                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
-
-        }
-        return $queryBuilder->getQuery()->getResult();
+        return $this->getLockKeyRepository()->findLockQuery($lock)->getResult();
     }
+
+//    public function cgetAvailablekeysAction($lock, Request $request){
+//
+//        $queryBuilder = $this->getLockKeyRepository()->searchQuery($lock);
+//        if ($request->query->getAlnum('filter')) {
+//            $queryBuilder->join("lk.lock", "l")
+//                ->join("lk.key", "k")
+//                ->andwhere('l.lock_name LIKE :tag OR k.tag LIKE :tag OR k.description LIKE :tag')
+////                ->orwhere('l.lock_name LIKE :tag')
+////                ->orwhere('k.tag LIKE :tag')
+////                ->orwhere('k.description LIKE :tag')
+//                //->andwhere('lk.lock = :lock')
+//                ->setParameter('lock', $lock)
+//                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+//
+//        }
+//        return $queryBuilder->getQuery()->getResult();
+//    }
    
 
     /**
