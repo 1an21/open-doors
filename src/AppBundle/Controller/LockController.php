@@ -206,28 +206,27 @@ class LockController extends FOSRestController implements ClassResourceInterface
         $template="mqtt_template.h";
         $newfile="mqtt.h";
         $data = file_get_contents($template);
-        $data = str_replace('lock',"$name_lock",$data);
+        $data = str_replace('lockusr',"$name_lock",$data);
         $data = str_replace('toor',"$pass_lock",$data);
         $data = str_replace('Some',"$name_lock",$data);
-        $data = str_replace('163.172.90.25',"$broker_ip",$data);
-        $data = str_replace('9002',"$broker_port",$data);
+        $data = str_replace('host_ip',"$broker_ip",$data);
+        $data = str_replace('ports',"$broker_port",$data);
         $data = str_replace('fake-try',"locks/$name_lock/try",$data);
         $data = str_replace('fake-open',"locks/$name_lock/result/open",$data);
         $data = str_replace('fake-deny',"locks/$name_lock/result/deny",$data);
         $data = str_replace('fake-wait',"locks/$name_lock/new-key/waiting-for-new-key",$data);
         $data = str_replace('fake-key-added',"locks/$name_lock/new-key/key_added",$data);
-        
+//
         file_put_contents($newfile,$data);
-        header('Content-Description: File Transfer');
-        header ("Content-Type: application/octet-stream");
-        header ("Accept-Ranges: bytes");
-        header ("Content-Length: ".filesize($newfile));
-        header('Content-Disposition: attachment; filename="'.basename($newfile).'"');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        readfile($newfile);
-        return $data;
+//        header('Content-Description: File Transfer');
+        header ("Content-Type: application/text");
+//        header ("Accept-Ranges: bytes");
+//        header ("Content-Length: ".filesize($newfile));
+//        header('Content-Disposition: attachment; filename="'.basename($newfile).'"');
+//        header('Expires: 0');
+//        header('Cache-Control: must-revalidate');
+//        header('Pragma: public');
+        return readfile($newfile);
     }
 
     
