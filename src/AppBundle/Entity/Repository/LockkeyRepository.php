@@ -46,7 +46,7 @@ class LockkeyRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->_em->createQuery(
             "
-            SELECT e.description, k.tag, l.lock_name, l.lock_pass, ee.name, ee.surname
+            SELECT l.id as lock_id, k.id as key_id, e.description, k.tag, l.lock_name, l.lock_pass, ee.name, ee.surname
             FROM AppBundle:Employeekey e
             JOIN AppBundle:Lockkey lk WITH e.rkey = lk.key
             JOIN AppBundle:Lock l WITH lk.lock = l.id
