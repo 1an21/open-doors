@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Entrance;
 use AppBundle\Entity\Key;
+use AppBundle\Entity\Lockkey;
 use AppBundle\Entity\Repository\EntranceRepository;
 use AppBundle\Form\Type\EntranceType;
 use AppBundle\Form\Type\KeyType;
@@ -86,32 +87,28 @@ class EntranceController extends FOSRestController implements ClassResourceInter
      */
     public function postAction(Request $request)
     {
-        $form = $this->createForm(EntranceType::class, null, [
-            'csrf_protection' => false,
-        ]);
+        $em = $this->get('doctrine')->getManager();        
+        $fieldtag=$request->request->get('tag');
+        $fieldlockname=$request->request->get('lock_name');
+        $fieldresult=$request->request->get('result');
+        $fieldtime=$request->request->get('time');
 
-        $form->submit($request->request->get('lock'));
+        $lock=$em->getRepository('AppBundle:Lock')->findOneBy(array('lock_name' => $fieldlockname));
+        $id_lock=$lock->getId();
 
-        if (!$form->isValid()) {
-            return $form;
-        }
-
-        $lock = $form->getData();
-
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($lock);
-        // $em->flush();
-
-        // $routeOptions = [
-        //     'id' => $lock->getId(),
-        //     '_format' => $request->get('_format'),
-        // ];
-
-        // $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
-        // $id=$lock->getId();
-        // return $this->getEntranceRepository()->findIdQuery($id)->getOneOrNullResult();
-        return $lock;
-
+        $key=$em->getRepository('AppBundle:Key')->findOneBy(array('tag' => $fieldtag));
+        $id_key=$key->getId();
+        
+        $em->flush();
+        $entrance=new Entrance();
+        $entrance->setLock($lock);
+        $entrance->setKey($key);
+        $entrance->setResult($fieldresult);
+        $entrance->setTime($fieldtime);
+        $em->persist($entrance);
+        $em->flush();
+        
+        return new View("OK", Response::HTTP_OK);
     }
 
     /**
@@ -281,6 +278,10 @@ class EntranceController extends FOSRestController implements ClassResourceInter
     private function getLockRepository()
     {
         return $this->get('crv.doctrine_entity_repository.lock');
+    }
+    private function getLockKeyRepository()
+    {
+        return $this->get('crv.doctrine_entity_repository.lockkey');
     }
 
 }

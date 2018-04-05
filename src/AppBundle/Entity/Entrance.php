@@ -70,7 +70,7 @@ class Entrance
      *
      * @param \AppBundle\Entity\Lock $lock
      *
-     * @return Lockkey
+     * @return Entrance
      */
     public function setLock(\AppBundle\Entity\Lock $lock)
     {
@@ -94,7 +94,7 @@ class Entrance
      *
      * @param \AppBundle\Entity\Key $key
      *
-     * @return Lockkey
+     * @return Entrance
      */
     public function setKey(\AppBundle\Entity\Key $key = null)
     {
