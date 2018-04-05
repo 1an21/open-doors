@@ -36,7 +36,7 @@ class LogController extends FOSRestController implements ClassResourceInterface
      */
     public function cgetAction(Request $request)
     {
-		return $this->getLogRepository()->createFindAllQuery()->getResult(); 
+		return $this->getLogRepository()->createFindMasterKeyQuery()->getResult(); 
     }
 
     /**

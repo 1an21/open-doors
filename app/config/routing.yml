@@ -38,3 +38,6 @@ masterkey:
 log:
     resource: "@AppBundle/Controller/LogController.php"
     type: rest
+entrance:
+    resource: "@AppBundle/Controller/EntranceController.php"
+    type: rest
