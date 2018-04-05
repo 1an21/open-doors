@@ -13,8 +13,10 @@ class KeyRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->_em->createQuery(
             "
-            SELECT k
+            SELECT k.id, k.tag, ek.description, e.name, e.surname
             FROM AppBundle:Key k
+            JOIN AppBundle:Employeekey ek with ek.rkey=k.id
+            JOIN AppBundle:Employee e with ek.employee=e.id
             "
         );
     }
