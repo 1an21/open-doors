@@ -63,14 +63,14 @@ class KeyController extends FOSRestController implements ClassResourceInterface
 
     public function cgetAction(Request $request)
     {
-//        return $this->getKeyRepository()->findAllKeyQuery()->getResult();
-        $queryBuilder = $this->getKeyRepository()->searchQuery();
-        if ($request->query->getAlnum('filter')) {
-            $queryBuilder->where('k.tag LIKE :tag')
-                ->orwhere('k.description LIKE :tag')
-                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
-        }
-        return $queryBuilder->getQuery()->getResult();
+        return $this->getKeyRepository()->findAllKeyQuery()->getResult();
+        // $queryBuilder = $this->getKeyRepository()->searchQuery();
+        // if ($request->query->getAlnum('filter')) {
+        //     $queryBuilder->where('k.tag LIKE :tag')
+        //         ->orwhere('k.description LIKE :tag')
+        //         ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+        // }
+        // return $queryBuilder->getQuery()->getResult();
     }
 
     /**
