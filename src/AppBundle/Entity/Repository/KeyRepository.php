@@ -27,7 +27,7 @@ class KeyRepository extends \Doctrine\ORM\EntityRepository
             "
             SELECT k.id, k.tag
             FROM AppBundle:Key k
-            JOIN AppBundle:Employeekey ek with ek.rkey=k.id and ek.id IS NULL
+            LEFT JOIN AppBundle:Employeekey ek with ek.rkey=k.id and ek.id IS NULL
             "
         );
     }
