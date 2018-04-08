@@ -39,11 +39,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\MasterKey
-    crv.doctrine_entity_repository.ExtLogEntries:
+    crv.doctrine_entity_repository.log:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\ExtLogEntries 
+            - AppBundle\Entity\LogLockKey
     crv.doctrine_entity_repository.entrance:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
