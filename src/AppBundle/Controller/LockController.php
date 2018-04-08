@@ -220,7 +220,6 @@ class LockController extends FOSRestController implements ClassResourceInterface
         file_put_contents($newfile,$data);
 //        header('Content-Description: File Transfer');
         header ("Content-Type: application/json");
-        header("Access-Control-Allow-Origin: *");
 //        header ("Accept-Ranges: bytes");
 //        header ("Content-Length: ".filesize($newfile));
 //        header('Content-Disposition: attachment; filename="'.basename($newfile).'"');
