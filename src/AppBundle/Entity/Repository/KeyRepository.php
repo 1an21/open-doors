@@ -20,6 +20,17 @@ class KeyRepository extends \Doctrine\ORM\EntityRepository
             "
         );
     }
+
+    public function findFreeKeysQuery()
+    {
+        return $this->_em->createQuery(
+            "
+            SELECT k.id, k.tag
+            FROM AppBundle:Key k
+            JOIN AppBundle:Employeekey ek with ek.rkey=k.id and ek.id IS NULL
+            "
+        );
+    }
     public function findKeyQuery($id)
     {
         $query = $this->_em->createQuery(

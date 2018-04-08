@@ -73,6 +73,18 @@ class KeyController extends FOSRestController implements ClassResourceInterface
         // return $queryBuilder->getQuery()->getResult();
     }
 
+    public function cgetFreeAction(Request $request)
+    {
+        return $this->getKeyRepository()->findFreeKeysQuery()->getResult();
+        // $queryBuilder = $this->getKeyRepository()->searchQuery();
+        // if ($request->query->getAlnum('filter')) {
+        //     $queryBuilder->where('k.tag LIKE :tag')
+        //         ->orwhere('k.description LIKE :tag')
+        //         ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+        // }
+        // return $queryBuilder->getQuery()->getResult();
+    }
+
     /**
      * Add a new key (require a role KEY_ADDER)
      * @param Request $request
