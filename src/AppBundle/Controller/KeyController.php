@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations;
 
 /**
  * Class KeyController
@@ -73,6 +74,12 @@ class KeyController extends FOSRestController implements ClassResourceInterface
         // return $queryBuilder->getQuery()->getResult();
     }
 
+    /**
+     * @Annotations\Get("/free-keys")
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function cgetFreeAction(Request $request)
     {
         return $this->getKeyRepository()->findFreeKeysQuery()->getResult();
