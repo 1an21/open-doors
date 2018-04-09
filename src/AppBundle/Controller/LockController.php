@@ -215,7 +215,7 @@ class LockController extends FOSRestController implements ClassResourceInterface
         $data = str_replace('fake-open',"locks/$name_lock/result/open",$data);
         $data = str_replace('fake-deny',"locks/$name_lock/result/deny",$data);
         $data = str_replace('fake-wait',"locks/$name_lock/new-key/waiting-for-new-key",$data);
-        $data = str_replace('fake-key-added',"locks/$name_lock/new-key/key_added",$data);
+        $data = str_replace('fake-key-added',"locks/$name_lock/new-key/key-added",$data);
 //
         file_put_contents($newfile,$data);
 //        header('Content-Description: File Transfer');
