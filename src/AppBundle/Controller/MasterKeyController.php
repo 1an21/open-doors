@@ -102,7 +102,8 @@ class MasterKeyController extends FOSRestController implements ClassResourceInte
         ];
 
         $this->routeRedirectView('', $routeOptions, Response::HTTP_CREATED);
-        return new View("OK", Response::HTTP_OK);
+        $id=$key->getId();
+        return $this->getMasterKeyRepository()->findKeyQuery($id)->getOneOrNullResult();
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-
+use AppBundle\Entity\ExtLogEntries;
 use AppBundle\Entity\Repository\LogRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -22,38 +22,21 @@ class LogController extends FOSRestController implements ClassResourceInterface
 {
    
     /**
-     * Logs for relationship lock - key
+     * Gets a collection of Locks (for use filter(lock_name): /locks?filter= )
      *
      * @return array
      *
      * @ApiDoc(
-     *     output="AppBundle\Entity\LogLockKey",
+     *     output="AppBundle\Entity\ExtLogEntries",
      *     statusCodes={
      *         200 = "Returned when successful",
      *         404 = "Return when not found"
      *     }
      * )
      */
-    public function cgetLockkeyAction(Request $request)
+    public function cgetAction(Request $request)
     {
-		return $this->getLogRepository()->FindLockKeyQuery()->getResult();
-    }
-    /**
-     *
-     * Logs for masterkeys
-     * @return array
-     *
-     * @ApiDoc(
-     *     output="AppBundle\Entity\LogMasterKey",
-     *     statusCodes={
-     *         200 = "Returned when successful",
-     *         404 = "Return when not found"
-     *     }
-     * )
-     */
-    public function cgetMasterkeyAction(Request $request)
-    {
-        return $this->getLogRepository()->FindMasterKeyQuery()->getResult();
+		return $this->getLogRepository()->createFindMasterKeyQuery()->getResult(); 
     }
 
     /**
@@ -61,7 +44,7 @@ class LogController extends FOSRestController implements ClassResourceInterface
      */
     private function getLogRepository()
     {
-        return $this->get('crv.doctrine_entity_repository.log');
+        return $this->get('crv.doctrine_entity_repository.ExtLogEntries');
     }
 
 }
