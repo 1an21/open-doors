@@ -21,7 +21,7 @@ class Version20180408202631 extends AbstractMigration
         SELECT 'delete', l.lock_name, l.lock_pass, k.tag
         FROM lockkey lk 
         LEFT JOIN locks as l on OLD.locks=l.id
-        LEFT JOIN rkey as k on OLD.rkey=k.id
+        LEFT JOIN rkey as k on OLD.rkey=k.id;
         
         CREATE TRIGGER `delete_mk` AFTER DELETE ON `masterkey`
         FOR EACH ROW INSERT INTO log_mk Set msg='delete', tag_mk = OLD.tag;
