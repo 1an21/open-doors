@@ -74,7 +74,18 @@ class EntranceController extends FOSRestController implements ClassResourceInter
                 ->where('l.lock_name LIKE :tag OR k.tag LIKE :tag OR en.result LIKE :tag' )
                 ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
         }
-        return $queryBuilder->getQuery()->getResult();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+        $queryBuilder, /* query NOT result */
+        $request->query->getInt('page', 1)/*page number*/,
+        10/*limit per page*/
+    );
+        $queryBuilder->getQuery()->getResult();
+        return $this->get('knp_paginator')->paginate(
+            $queryBuilder->getQuery(), /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            $request->query->getInt('limit', 5)/*limit per page*/
+        );
         // return $this->getEntranceRepository()->findLockQuery()->getResult();
     }
 
