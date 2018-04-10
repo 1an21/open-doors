@@ -65,9 +65,17 @@ class EntranceController extends FOSRestController implements ClassResourceInter
      *     }
      * )
      */
-    public function cgetAction(){
-
-        return $this->getEntranceRepository()->findLockQuery()->getResult();
+    public function cgetAction(Request $request){
+        $queryBuilder = $this->getEntranceRepository()->searchQuery();
+        if ($request->query->getAlnum('filter')) {
+            $queryBuilder
+                ->join("en.lock", "l")
+                ->join("en.key", "k")
+                ->where('l.lock_name LIKE :tag OR k.tag LIKE :tag OR en.result LIKE :tag' )
+                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+        }
+        return $queryBuilder->getQuery()->getResult();
+        // return $this->getEntranceRepository()->findLockQuery()->getResult();
     }
 
 

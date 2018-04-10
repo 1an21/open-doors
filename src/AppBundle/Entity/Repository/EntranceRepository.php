@@ -5,11 +5,9 @@ use Doctrine\DBAL\DriverManager;
 class EntranceRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function searchQuery($lock)
+    public function searchQuery()
     {
-        return $this->_em->getRepository('AppBundle:Entrance')->createQueryBuilder('lk')
-        ->where('lk.lock=:lock')
-        ->setParameter('lock', $lock);
+        return $this->_em->getRepository('AppBundle:Entrance')->createQueryBuilder('en');
     }
 
     public function findIdQuery($id)
