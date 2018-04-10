@@ -25,3 +25,5 @@ parameters:
     brok_pass : ${API_BROKER_PASS}
     brok_client_name : 'apiService'
     top_name : ${API_BROKER_TOPIC}
+    config_brok_ip : ${API_LOCK_CONFIG_BROKER_HOST}
+    config_brok_port : ${API_LOCK_CONFIG_BROKER_PORT}

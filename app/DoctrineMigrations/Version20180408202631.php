@@ -17,11 +17,11 @@ class Version20180408202631 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
         $this->addSql("CREATE TRIGGER `delete_lk` AFTER DELETE ON `lockkey`
-        FOR EACH ROW INSERT INTO log_lk ( msg, lock_name, lock_pass, tag ) 
+ FOR EACH ROW INSERT INTO log_lk ( msg, lock_name, lock_pass, tag ) 
         SELECT 'delete', l.lock_name, l.lock_pass, k.tag
         FROM lockkey lk 
-        LEFT JOIN locks as l on lk.locks=l.id
-        LEFT JOIN rkey as k on lk.rkey=k.id;
+        LEFT JOIN locks as l on OLD.locks=l.id
+        LEFT JOIN rkey as k on OLD.rkey=k.id
         
         CREATE TRIGGER `delete_mk` AFTER DELETE ON `masterkey`
         FOR EACH ROW INSERT INTO log_mk Set msg='delete', tag_mk = OLD.tag;
@@ -36,14 +36,6 @@ class Version20180408202631 extends AbstractMigration
         
         CREATE TRIGGER `insert_mk` AFTER INSERT ON `masterkey`
         FOR EACH ROW INSERT INTO log_mk Set msg = 'insert', tag_mk = NEW.tag;
-        
-        CREATE TRIGGER `update_lk` AFTER UPDATE ON `lockkey`
-        FOR EACH ROW INSERT INTO log_lk ( msg, lock_name, lock_pass, tag, old_name, old_pass, old_tag ) 
-        SELECT 'update', l.lock_name, l.lock_pass, k.tag, OLD.locks, OLD.rkey, ''
-        FROM lockkey lk 
-        LEFT JOIN locks as l on lk.locks=l.id
-        LEFT JOIN rkey as k on lk.rkey=k.id
-        WHERE lk.locks=NEW.locks AND lk.rkey=NEW.rkey;
         
         CREATE TRIGGER `update_mk` AFTER UPDATE ON `masterkey`
         FOR EACH ROW INSERT INTO log_mk Set msg='update', tag_mk=NEW.tag, old_tag=OLD.tag;

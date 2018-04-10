@@ -200,8 +200,8 @@ class LockController extends FOSRestController implements ClassResourceInterface
         $name_lock=$lock->getLockName();
         $pass_lock=$lock->getLockPass();
 
-        $broker_ip=$this->getParameter('broker_ip');
-        $broker_port=$this->getParameter('broker_port');
+        $broker_ip=$this->getParameter('config_broker_ip');
+        $broker_port=$this->getParameter('config_broker_port');
 
         $template="mqtt_template.h";
         $newfile="mqtt.h";
