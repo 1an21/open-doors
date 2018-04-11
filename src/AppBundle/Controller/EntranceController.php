@@ -25,35 +25,9 @@ use Predis\Client;
  */
 class EntranceController extends FOSRestController implements ClassResourceInterface
 {
-    /**
-     * Gets an individual key for individual lock
-     *
-     * @param int $lock
-     * @param int $id
-     * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     *
-     * @ApiDoc(
-     *     output="AppBundle\Entity\Entrance",
-     *     statusCodes={
-     *         200 = "Returned when successful",
-     *         404 = "Return when not found"
-     *     }
-     * )
-     */
-//    public function getAction($id)
-//    {
-//        $key = $this->getEntranceRepository()->findEntranceQuery($id)->getOneOrNullResult();
-//        if ($key === null) {
-//            return new View("Dont exist key with id $id for lock $lock");
-//        }
-//
-//        return $key;
-//    }
 
     /**
-     * Gets a collection of keys for locks )
+     * Gets a collection of keys for locks 
      *
      * @return array
      *
@@ -67,20 +41,28 @@ class EntranceController extends FOSRestController implements ClassResourceInter
      */
     public function cgetAction(Request $request){
         $queryBuilder = $this->getEntranceRepository()->searchQuery();
-        if ($request->query->getAlnum('filter')) {
+        if ($request->query->getAlnum('lock')) {
             $queryBuilder
                 ->join("en.lock", "l")
-                ->join("en.key", "k")
-                ->where('l.lock_name LIKE :tag OR k.tag LIKE :tag OR en.result LIKE :tag' )
-                ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+                ->where('l.id LIKE :idlock' )
+                ->setMaxResults(100)
+                ->setParameter('idlock', $request->query->getAlnum('lock') )
+                ;
         }
-
+        elseif($request->query->getAlnum('key')){
+            $queryBuilder
+                ->join("en.key", "k")
+                ->where('k.id LIKE :idkey ' )
+                ->setMaxResults(100)
+                ->setParameter('idkey',  $request->query->getAlnum('key') )
+            ;
+        }
         return $this->get('knp_paginator')->paginate(
-            $queryBuilder->getQuery(), /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            $request->query->getInt('limit', 10)/*limit per page*/
+            $queryBuilder->getQuery(),
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 20)
         );
-        // return $this->getEntranceRepository()->findLockQuery()->getResult();
+
     }
 
 
