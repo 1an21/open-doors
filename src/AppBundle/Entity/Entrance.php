@@ -1,7 +1,6 @@
 <?php
 
 namespace AppBundle\Entity;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="entrance", indexes={@ORM\Index(name="rkey", columns={"rkey"}), @ORM\Index(name="locks", columns={"locks"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\EntranceRepository")
- * @Gedmo\Loggable
+
  */
 class Entrance
 {
@@ -24,7 +23,7 @@ class Entrance
 
     /**
      * @var \AppBundle\Entity\Lock
-     * @Gedmo\Versioned
+
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lock")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="locks", referencedColumnName="id")
@@ -34,7 +33,6 @@ class Entrance
 
     /**
      * @var \AppBundle\Entity\Key
-     * @Gedmo\Versioned
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Key")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rkey", referencedColumnName="id")

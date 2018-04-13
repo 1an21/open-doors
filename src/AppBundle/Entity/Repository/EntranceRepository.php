@@ -7,7 +7,8 @@ class EntranceRepository extends \Doctrine\ORM\EntityRepository
 
     public function searchQuery()
     {
-        return $this->_em->getRepository('AppBundle:Entrance')->createQueryBuilder('en');
+        return $this->_em->getRepository('AppBundle:Entrance')->createQueryBuilder('en')
+            ->addOrderBy('en.id', 'DESC');
     }
 
     public function findIdQuery($id)

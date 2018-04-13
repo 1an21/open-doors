@@ -27,7 +27,7 @@ class EntranceController extends FOSRestController implements ClassResourceInter
 {
 
     /**
-     * Gets a collection of keys for locks 
+     * Gets a collection of keys for locks
      *
      * @return array
      *
@@ -41,28 +41,36 @@ class EntranceController extends FOSRestController implements ClassResourceInter
      */
     public function cgetAction(Request $request){
         $queryBuilder = $this->getEntranceRepository()->searchQuery();
-        if ($request->query->getAlnum('lock')) {
-            $queryBuilder
-                ->join("en.lock", "l")
-                ->where('l.id LIKE :idlock' )
-                ->setMaxResults(100)
-                ->setParameter('idlock', $request->query->getAlnum('lock') )
-                ;
+        if (($request->query->getInt('lock'))) {
+            if (($request->query->getInt('key'))) {
+                $queryBuilder
+                    ->join("en.lock", "l")
+                    ->join("en.key", "k")
+                    ->where('k.id LIKE :idkey and l.id LIKE :idlock')
+                    ->setMaxResults(100)
+                    ->setParameter('idkey', $request->query->getInt('key'))
+                    ->setParameter('idlock', $request->query->getInt('lock'));
+            }
+            else {
+                $queryBuilder
+                    ->join("en.lock", "l")
+                    ->where('l.id LIKE :idlock')
+                    ->setMaxResults(100)
+                    ->setParameter('idlock', $request->query->getInt('lock'));
+            }
         }
-        elseif($request->query->getAlnum('key')){
+        elseif(($request->query->getInt('key'))) {
             $queryBuilder
                 ->join("en.key", "k")
-                ->where('k.id LIKE :idkey ' )
+                ->where('k.id LIKE :idkey ')
                 ->setMaxResults(100)
-                ->setParameter('idkey',  $request->query->getAlnum('key') )
-            ;
+                ->setParameter('idkey', $request->query->getInt('key'));
         }
+
         return $this->get('knp_paginator')->paginate(
             $queryBuilder->getQuery(),
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 20)
-        );
-
+            $request->query->getInt('limit', 20));
     }
 
 
