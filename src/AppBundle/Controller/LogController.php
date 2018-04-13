@@ -34,9 +34,9 @@ class LogController extends FOSRestController implements ClassResourceInterface
      *     }
      * )
      */
-    public function cgetLockkeyAction(Request $request)
+    public function cgetLockkeyAction(Request $request, $id)
     {
-		return $this->getLogRepository()->FindLockKeyQuery()->getResult();
+		return $this->getLogRepository()->FindLockKeyQuery($id)->getResult();
     }
     /**
      *
@@ -51,9 +51,9 @@ class LogController extends FOSRestController implements ClassResourceInterface
      *     }
      * )
      */
-    public function cgetMasterkeyAction(Request $request)
+    public function cgetMasterkeyAction(Request $request, $id)
     {
-        return $this->getLogRepository()->FindMasterKeyQuery()->getResult();
+        return $this->getLogRepository()->FindMasterKeyQuery($id)->getResult();
     }
 
     /**

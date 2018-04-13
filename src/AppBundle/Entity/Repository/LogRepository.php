@@ -7,32 +7,29 @@ class LogRepository extends \Doctrine\ORM\EntityRepository
     
 
     
-public function FindLockKeyQuery()
+public function FindLockKeyQuery($id)
     {
-        // $dates = new \DateTime();
-        // $dates->modify('-5 minute');
         $query =  $this->_em->createQuery(
             "
-            SELECT l.time, l.msg, l.lockName,  l.tag
+            SELECT l.id, l.time, l.msg, l.lockName,  l.tag
             FROM AppBundle:LogLockKey l
-            
+            WHERE l.id > :id
             "
-            
         );
-        //$query->setParameter('dates', $dates);
+        $query->setParameter('id', $id);
         return $query;
     }
-    public function FindMasterKeyQuery()
+    public function FindMasterKeyQuery($id)
     {
         
         $query =  $this->_em->createQuery(
             "
-            SELECT m.time, m.msg, m.tagMk as tag, m.oldTag as oldtag
+            SELECT m.id, m.time, m.msg, m.tagMk as tag, m.oldTag as oldtag
             FROM AppBundle:LogMasterKey m
+            WHERE m.id > :id
             "
-
         );
-
+        $query->setParameter('id', $id);
         return $query;
     }
 
