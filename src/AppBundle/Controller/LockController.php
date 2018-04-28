@@ -26,10 +26,9 @@ class LockController extends FOSRestController implements ClassResourceInterface
     /**
      * Gets an all locks and his keys
      *
-     * 
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
      *
+     * @param Request $request
+     * @return array
      * @ApiDoc(
      *     output="AppBundle\Entity\Lock",
      *     statusCodes={
@@ -38,9 +37,9 @@ class LockController extends FOSRestController implements ClassResourceInterface
      *     }
      * )
      */
-    public function cgetAllkeysAction()
+    public function cgetAllkeysAction(Request $request)
     {
-        return $this->getLockRepository()->FindAllQuery()->getResult();
+        return $this->getLockRepository()->FindAllQuery($request->query->getInt('employee'))->getResult();
     }
 
     /**

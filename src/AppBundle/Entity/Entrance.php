@@ -43,7 +43,7 @@ class Entrance
     /**
      * @var string
      *
-     * @ORM\Column(name="entime", type="string", length=65535)
+     * @ORM\Column(name="entime", type="string", length=255)
      */
     private $time;
     /**
