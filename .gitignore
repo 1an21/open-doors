@@ -46,3 +46,4 @@
 .idea
 vendor/
 /vendor/
+!/.gitignore
