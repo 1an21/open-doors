@@ -41,12 +41,13 @@ class EntranceController extends FOSRestController implements ClassResourceInter
      */
     public function cgetAction(Request $request){
         $queryBuilder = $this->getEntranceRepository()->searchQuery();
+        
         if (($request->query->getInt('lock'))) {
             if (($request->query->getInt('key'))) {
                 $queryBuilder
                     ->join("en.lock", "l")
                     ->join("en.key", "k")
-                    ->where('k.id LIKE :idkey and l.id LIKE :idlock')
+                    ->where('k.tag LIKE :idkey and l.lock_name LIKE :idlock')
                     ->setMaxResults(100)
                     ->setParameter('idkey', $request->query->getInt('key'))
                     ->setParameter('idlock', $request->query->getInt('lock'));
@@ -54,7 +55,7 @@ class EntranceController extends FOSRestController implements ClassResourceInter
             else {
                 $queryBuilder
                     ->join("en.lock", "l")
-                    ->where('l.id LIKE :idlock')
+                    ->where('l.lock_name LIKE :idlock')
                     ->setMaxResults(100)
                     ->setParameter('idlock', $request->query->getInt('lock'));
             }
@@ -62,7 +63,7 @@ class EntranceController extends FOSRestController implements ClassResourceInter
         elseif(($request->query->getInt('key'))) {
             $queryBuilder
                 ->join("en.key", "k")
-                ->where('k.id LIKE :idkey ')
+                ->where('k.tag LIKE :idkey ')
                 ->setMaxResults(100)
                 ->setParameter('idkey', $request->query->getInt('key'));
         }
