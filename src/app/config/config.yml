@@ -62,9 +62,6 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
-        dql:
-          string_functions:
-            unix_timestamp: AppBundle\Dql\UnixTimestamp
         mappings:
           gedmo_loggable:
               type: annotation

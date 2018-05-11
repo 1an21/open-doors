@@ -40,57 +40,39 @@ class EntranceController extends FOSRestController implements ClassResourceInter
      * )
      */
     public function cgetAction(Request $request){
-    $queryBuilder = $this->getEntranceRepository()->searchQuery();
-
-    if (($request->query->getAlnum('lock'))) {
-      if (($request->query->getAlnum('employee'))) {
-        $queryBuilder
-            ->where('e.surname LIKE :surname or e.name LIKE :surname and l.lock_name LIKE :idlock')
-            ->setMaxResults(100)
-            ->setParameter('surname', '%' .$request->query->getAlnum('employee').'%')
-            ->setParameter('idlock', '%' .$request->query->getAlnum('lock').'%');
-      }
-      else {
-        $queryBuilder
-            ->where('l.lock_name LIKE :idlock')
-            ->setMaxResults(100)
-            ->setParameter('idlock', '%' .$request->query->getAlnum('lock').'%' );
-      }
-    }
-    elseif(($request->query->getAlnum('employee'))) {
-      $queryBuilder
-          ->where('e.surname LIKE :surname or e.name LIKE :surname')
-          ->setMaxResults(100)
-          ->setParameter('surname', '%' .$request->query->getAlnum('employee').'%');
-    }
-
-    if(($request->query->getInt('datefrom'))){
-        if(($request->query->getInt('dateto'))){
-        $queryBuilder
-            ->where('UNIX_TIMESTAMP(en.time) >= :from and UNIX_TIMESTAMP(en.time) <= :to')
-            ->setMaxResults(100)
-            ->setParameter('from', $request->query->getInt('datefrom'))
-            ->setParameter('to', $request->query->getInt('dateto'));
+        $queryBuilder = $this->getEntranceRepository()->searchQuery();
+        
+        if (($request->query->getInt('lock'))) {
+            if (($request->query->getInt('key'))) {
+                $queryBuilder
+                    ->join("en.lock", "l")
+                    ->join("en.key", "k")
+                    ->where('k.tag LIKE :idkey and l.lock_name LIKE :idlock')
+                    ->setMaxResults(100)
+                    ->setParameter('idkey', $request->query->getInt('key'))
+                    ->setParameter('idlock', $request->query->getInt('lock'));
+            }
+            else {
+                $queryBuilder
+                    ->join("en.lock", "l")
+                    ->where('l.lock_name LIKE :idlock')
+                    ->setMaxResults(100)
+                    ->setParameter('idlock', $request->query->getInt('lock'));
+            }
         }
-        else {
-        $queryBuilder
-            ->where('UNIX_TIMESTAMP(en.time) >= :from')
-            ->setMaxResults(100)
-            ->setParameter('from', $request->query->getInt('datefrom'));
+        elseif(($request->query->getInt('key'))) {
+            $queryBuilder
+                ->join("en.key", "k")
+                ->where('k.tag LIKE :idkey ')
+                ->setMaxResults(100)
+                ->setParameter('idkey', $request->query->getInt('key'));
         }
-    }
-    elseif(($request->query->getInt('dateto'))) {
-        $queryBuilder
-            ->where('UNIX_TIMESTAMP(en.time) <= :to')
-            ->setMaxResults(100)
-            ->setParameter('to', $request->query->getInt('dateto'));
-    }
 
-    return $this->get('knp_paginator')->paginate(
-        $queryBuilder->getQuery(),
-        $request->query->getInt('page', 1),
-        $request->query->getInt('limit', 20));
-  }
+        return $this->get('knp_paginator')->paginate(
+            $queryBuilder->getQuery(),
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 20));
+    }
 
 
 
