@@ -115,5 +115,6 @@ ADD ./deploy/php/php.ini /usr/local/etc/php/php.ini
 
 # RUN ln -sf /dev/stdout ./var/logs/prod.log
 
+RUN bin/console doctrine:migrations:migrate
 # openrc for nginx
 CMD php-fpm -F
