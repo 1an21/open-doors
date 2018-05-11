@@ -27,7 +27,8 @@ class KeyRepository extends \Doctrine\ORM\EntityRepository
             "
             SELECT k.id, k.tag
             FROM AppBundle:Key k
-            LEFT JOIN AppBundle:Employeekey ek with ek.rkey=k.id and ek.id IS NULL
+            LEFT JOIN AppBundle:Employeekey ek with ek.rkey=k.id 
+            WHERE ek.id IS NULL
             "
         );
     }
@@ -99,10 +100,4 @@ class KeyRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
-
-
-    public function insertQuery($id)
-    {
-
-    }
 }
