@@ -8,6 +8,11 @@ class EntranceRepository extends \Doctrine\ORM\EntityRepository
     public function searchQuery()
     {
         return $this->_em->getRepository('AppBundle:Entrance')->createQueryBuilder('en')
+            ->select("en.time","en.result", "l.lock_name","k.tag", "e.name", "e.surname", "e.age")
+            ->join("AppBundle\Entity\Key", "k", "WITH", "k.id=en.key")
+            ->join("AppBundle\Entity\Lock", "l", "WITH", "l.id=en.lock")
+            ->join("AppBundle\Entity\Employeekey", "ek", "WITH","ek.rkey=k.id")
+            ->join("AppBundle\Entity\Employee", "e", "WITH","e.id=ek.employee")
             ->addOrderBy('en.id', 'DESC');
     }
 
