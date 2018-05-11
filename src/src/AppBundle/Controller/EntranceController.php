@@ -117,7 +117,14 @@ class EntranceController extends FOSRestController implements ClassResourceInter
 
         $lock=$em->getRepository('AppBundle:Lock')->findOneBy(array('lock_name' => $fieldlockname));
         $key=$em->getRepository('AppBundle:Key')->findOneBy(array('tag' => $fieldtag));
-        if($key!=null & $lock!=null) {
+        if($key==null){
+            $key=new Key();
+            $key->setTag($fieldtag);
+            $key->setDescription("");
+            $em->persist($key);
+            $em->flush();
+        }
+        if($lock!=null) {
             $entrance = new Entrance();
             $entrance->setLock($lock);
             $entrance->setKey($key);
@@ -128,6 +135,7 @@ class EntranceController extends FOSRestController implements ClassResourceInter
 
             return new View("OK", Response::HTTP_OK);
         }
+
         else return new View("Not found this lock or key", Response::HTTP_NOT_FOUND);
     }
 
