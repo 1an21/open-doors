@@ -117,12 +117,24 @@ class EntranceController extends FOSRestController implements ClassResourceInter
 
         $lock=$em->getRepository('AppBundle:Lock')->findOneBy(array('lock_name' => $fieldlockname));
         $key=$em->getRepository('AppBundle:Key')->findOneBy(array('tag' => $fieldtag));
+
         if($key==null){
             $key=new Key();
             $key->setTag($fieldtag);
             $key->setDescription("");
             $em->persist($key);
             $em->flush();
+            $k_id=$key->getId();
+            $k_tag=$key->getTag();
+
+            $mqtt= new BrokerController();
+            $broker_ip=$this->getParameter('broker_ip');
+            $broker_port=$this->getParameter('broker_port');
+            $broker_name=$this->getParameter('broker_name');
+            $broker_pass=$this->getParameter('broker_pass');
+            $broker_client_name=$this->getParameter('broker_client_name');
+            $topic_name=$this->getParameter('topic_key_added');
+            $mqtt->pushKey($k_id, $k_tag, $broker_ip, $broker_port, $broker_name,$broker_pass, $broker_client_name, $topic_name);
         }
         if($lock!=null) {
             $entrance = new Entrance();

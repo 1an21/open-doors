@@ -16,6 +16,7 @@ parameters:
     broker_pass: '%brok_pass%'
     broker_client_name: '%brok_client_name%'
     topic_name: '%top_name%'
+    topic_key_added: key-added
     config_broker_ip: '%config_brok_ip%'
     config_broker_port: '%config_brok_port%'
 framework:
