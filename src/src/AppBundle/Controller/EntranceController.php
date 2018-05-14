@@ -133,7 +133,7 @@ class EntranceController extends FOSRestController implements ClassResourceInter
             $broker_name=$this->getParameter('broker_name');
             $broker_pass=$this->getParameter('broker_pass');
             $broker_client_name=$this->getParameter('broker_client_name');
-            $topic_name=$this->getParameter('topic_key_added');
+            $topic_name='locks/' . $fieldlockname . '/new-key/key-added';
             $mqtt->pushKey($k_id, $k_tag, $broker_ip, $broker_port, $broker_name,$broker_pass, $broker_client_name, $topic_name);
         }
         if($lock!=null) {
